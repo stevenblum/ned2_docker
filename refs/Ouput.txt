@@ -1,0 +1,845 @@
+
+SUMMARY
+========
+
+PARAMETERS
+ * /controller_list: [{'name': 'niryo_...
+ * /hardware_control_loop/loop_hz: 25
+ * /hardware_interface/joints: ['joint_1', 'join...
+ * /joint_state_controller/publish_rate: 50
+ * /joint_state_controller/type: joint_state_contr...
+ * /move_group/allow_trajectory_execution: True
+ * /move_group/arm/longest_valid_segment_fraction: 0.005
+ * /move_group/arm/planner_configs: ['SBLkConfigDefau...
+ * /move_group/arm/projection_evaluator: joints(joint_1,jo...
+ * /move_group/controller_list: [{'name': 'niryo_...
+ * /move_group/hardware_control_loop/loop_hz: 25
+ * /move_group/jiggle_fraction: 0.05
+ * /move_group/joint_state_controller/publish_rate: 50
+ * /move_group/joint_state_controller/type: joint_state_contr...
+ * /move_group/max_range: 5.0
+ * /move_group/max_safe_path_cost: 1
+ * /move_group/moveit_controller_manager: moveit_simple_con...
+ * /move_group/moveit_manage_controllers: True
+ * /move_group/niryo_robot_follow_joint_trajectory_controller/action_monitor_rate: 10
+ * /move_group/niryo_robot_follow_joint_trajectory_controller/allow_partial_joints_goal: True
+ * /move_group/niryo_robot_follow_joint_trajectory_controller/constraints/goal_time: 1.0
+ * /move_group/niryo_robot_follow_joint_trajectory_controller/constraints/joint_1/goal: 0.2
+ * /move_group/niryo_robot_follow_joint_trajectory_controller/constraints/joint_1/trajectory: 0.5
+ * /move_group/niryo_robot_follow_joint_trajectory_controller/constraints/joint_2/goal: 0.2
+ * /move_group/niryo_robot_follow_joint_trajectory_controller/constraints/joint_2/trajectory: 0.5
+ * /move_group/niryo_robot_follow_joint_trajectory_controller/constraints/joint_3/goal: 0.2
+ * /move_group/niryo_robot_follow_joint_trajectory_controller/constraints/joint_3/trajectory: 0.5
+ * /move_group/niryo_robot_follow_joint_trajectory_controller/constraints/joint_4/goal: 0.2
+ * /move_group/niryo_robot_follow_joint_trajectory_controller/constraints/joint_4/trajectory: 0.5
+ * /move_group/niryo_robot_follow_joint_trajectory_controller/constraints/joint_5/goal: 0.3
+ * /move_group/niryo_robot_follow_joint_trajectory_controller/constraints/joint_5/trajectory: 1.0
+ * /move_group/niryo_robot_follow_joint_trajectory_controller/constraints/joint_6/goal: 0.3
+ * /move_group/niryo_robot_follow_joint_trajectory_controller/constraints/joint_6/trajectory: 1.0
+ * /move_group/niryo_robot_follow_joint_trajectory_controller/constraints/stopped_velocity_tolerance: 0.05
+ * /move_group/niryo_robot_follow_joint_trajectory_controller/joints: ['joint_1', 'join...
+ * /move_group/niryo_robot_follow_joint_trajectory_controller/state_publish_rate: 20
+ * /move_group/niryo_robot_follow_joint_trajectory_controller/stop_trajectory_duration: 1.0
+ * /move_group/niryo_robot_follow_joint_trajectory_controller/type: position_controll...
+ * /move_group/octomap_resolution: 0.025
+ * /move_group/planner_configs/BFMTkConfigDefault/balanced: 0
+ * /move_group/planner_configs/BFMTkConfigDefault/cache_cc: 1
+ * /move_group/planner_configs/BFMTkConfigDefault/extended_fmt: 1
+ * /move_group/planner_configs/BFMTkConfigDefault/heuristics: 1
+ * /move_group/planner_configs/BFMTkConfigDefault/nearest_k: 1
+ * /move_group/planner_configs/BFMTkConfigDefault/num_samples: 1000
+ * /move_group/planner_configs/BFMTkConfigDefault/optimality: 1
+ * /move_group/planner_configs/BFMTkConfigDefault/radius_multiplier: 1.0
+ * /move_group/planner_configs/BFMTkConfigDefault/type: geometric::BFMT
+ * /move_group/planner_configs/BKPIECEkConfigDefault/border_fraction: 0.9
+ * /move_group/planner_configs/BKPIECEkConfigDefault/failed_expansion_score_factor: 0.5
+ * /move_group/planner_configs/BKPIECEkConfigDefault/min_valid_path_fraction: 0.5
+ * /move_group/planner_configs/BKPIECEkConfigDefault/range: 0.0
+ * /move_group/planner_configs/BKPIECEkConfigDefault/type: geometric::BKPIECE
+ * /move_group/planner_configs/BiESTkConfigDefault/range: 0.0
+ * /move_group/planner_configs/BiESTkConfigDefault/type: geometric::BiEST
+ * /move_group/planner_configs/BiTRRTkConfigDefault/cost_threshold: 1e300
+ * /move_group/planner_configs/BiTRRTkConfigDefault/frountier_node_ratio: 0.1
+ * /move_group/planner_configs/BiTRRTkConfigDefault/frountier_threshold: 0.0
+ * /move_group/planner_configs/BiTRRTkConfigDefault/init_temperature: 100
+ * /move_group/planner_configs/BiTRRTkConfigDefault/range: 0.0
+ * /move_group/planner_configs/BiTRRTkConfigDefault/temp_change_factor: 0.1
+ * /move_group/planner_configs/BiTRRTkConfigDefault/type: geometric::BiTRRT
+ * /move_group/planner_configs/ESTkConfigDefault/goal_bias: 0.05
+ * /move_group/planner_configs/ESTkConfigDefault/range: 0.0
+ * /move_group/planner_configs/ESTkConfigDefault/type: geometric::EST
+ * /move_group/planner_configs/FMTkConfigDefault/cache_cc: 1
+ * /move_group/planner_configs/FMTkConfigDefault/extended_fmt: 1
+ * /move_group/planner_configs/FMTkConfigDefault/heuristics: 0
+ * /move_group/planner_configs/FMTkConfigDefault/nearest_k: 1
+ * /move_group/planner_configs/FMTkConfigDefault/num_samples: 1000
+ * /move_group/planner_configs/FMTkConfigDefault/radius_multiplier: 1.1
+ * /move_group/planner_configs/FMTkConfigDefault/type: geometric::FMT
+ * /move_group/planner_configs/KPIECEkConfigDefault/border_fraction: 0.9
+ * /move_group/planner_configs/KPIECEkConfigDefault/failed_expansion_score_factor: 0.5
+ * /move_group/planner_configs/KPIECEkConfigDefault/goal_bias: 0.05
+ * /move_group/planner_configs/KPIECEkConfigDefault/min_valid_path_fraction: 0.5
+ * /move_group/planner_configs/KPIECEkConfigDefault/range: 0.0
+ * /move_group/planner_configs/KPIECEkConfigDefault/type: geometric::KPIECE
+ * /move_group/planner_configs/LBKPIECEkConfigDefault/border_fraction: 0.9
+ * /move_group/planner_configs/LBKPIECEkConfigDefault/min_valid_path_fraction: 0.5
+ * /move_group/planner_configs/LBKPIECEkConfigDefault/range: 0.0
+ * /move_group/planner_configs/LBKPIECEkConfigDefault/type: geometric::LBKPIECE
+ * /move_group/planner_configs/LBTRRTkConfigDefault/epsilon: 0.4
+ * /move_group/planner_configs/LBTRRTkConfigDefault/goal_bias: 0.05
+ * /move_group/planner_configs/LBTRRTkConfigDefault/range: 0.0
+ * /move_group/planner_configs/LBTRRTkConfigDefault/type: geometric::LBTRRT
+ * /move_group/planner_configs/LazyPRMkConfigDefault/range: 0.0
+ * /move_group/planner_configs/LazyPRMkConfigDefault/type: geometric::LazyPRM
+ * /move_group/planner_configs/LazyPRMstarkConfigDefault/type: geometric::LazyPR...
+ * /move_group/planner_configs/PDSTkConfigDefault/type: geometric::PDST
+ * /move_group/planner_configs/PRMkConfigDefault/max_nearest_neighbors: 10
+ * /move_group/planner_configs/PRMkConfigDefault/type: geometric::PRM
+ * /move_group/planner_configs/PRMstarkConfigDefault/type: geometric::PRMstar
+ * /move_group/planner_configs/ProjESTkConfigDefault/goal_bias: 0.05
+ * /move_group/planner_configs/ProjESTkConfigDefault/range: 0.0
+ * /move_group/planner_configs/ProjESTkConfigDefault/type: geometric::ProjEST
+ * /move_group/planner_configs/RRTConnectkConfigDefault/range: 0.0
+ * /move_group/planner_configs/RRTConnectkConfigDefault/type: geometric::RRTCon...
+ * /move_group/planner_configs/RRTkConfigDefault/goal_bias: 0.05
+ * /move_group/planner_configs/RRTkConfigDefault/range: 0.0
+ * /move_group/planner_configs/RRTkConfigDefault/type: geometric::RRT
+ * /move_group/planner_configs/RRTstarkConfigDefault/delay_collision_checking: 1
+ * /move_group/planner_configs/RRTstarkConfigDefault/goal_bias: 0.05
+ * /move_group/planner_configs/RRTstarkConfigDefault/range: 0.0
+ * /move_group/planner_configs/RRTstarkConfigDefault/type: geometric::RRTstar
+ * /move_group/planner_configs/SBLkConfigDefault/range: 0.0
+ * /move_group/planner_configs/SBLkConfigDefault/type: geometric::SBL
+ * /move_group/planner_configs/SPARSkConfigDefault/dense_delta_fraction: 0.001
+ * /move_group/planner_configs/SPARSkConfigDefault/max_failures: 1000
+ * /move_group/planner_configs/SPARSkConfigDefault/sparse_delta_fraction: 0.25
+ * /move_group/planner_configs/SPARSkConfigDefault/stretch_factor: 3.0
+ * /move_group/planner_configs/SPARSkConfigDefault/type: geometric::SPARS
+ * /move_group/planner_configs/SPARStwokConfigDefault/dense_delta_fraction: 0.001
+ * /move_group/planner_configs/SPARStwokConfigDefault/max_failures: 5000
+ * /move_group/planner_configs/SPARStwokConfigDefault/sparse_delta_fraction: 0.25
+ * /move_group/planner_configs/SPARStwokConfigDefault/stretch_factor: 3.0
+ * /move_group/planner_configs/SPARStwokConfigDefault/type: geometric::SPARStwo
+ * /move_group/planner_configs/STRIDEkConfigDefault/degree: 16
+ * /move_group/planner_configs/STRIDEkConfigDefault/estimated_dimension: 0.0
+ * /move_group/planner_configs/STRIDEkConfigDefault/goal_bias: 0.05
+ * /move_group/planner_configs/STRIDEkConfigDefault/max_degree: 18
+ * /move_group/planner_configs/STRIDEkConfigDefault/max_pts_per_leaf: 6
+ * /move_group/planner_configs/STRIDEkConfigDefault/min_degree: 12
+ * /move_group/planner_configs/STRIDEkConfigDefault/min_valid_path_fraction: 0.2
+ * /move_group/planner_configs/STRIDEkConfigDefault/range: 0.0
+ * /move_group/planner_configs/STRIDEkConfigDefault/type: geometric::STRIDE
+ * /move_group/planner_configs/STRIDEkConfigDefault/use_projected_distance: 0
+ * /move_group/planner_configs/TRRTkConfigDefault/frountierNodeRatio: 0.1
+ * /move_group/planner_configs/TRRTkConfigDefault/frountier_threshold: 0.0
+ * /move_group/planner_configs/TRRTkConfigDefault/goal_bias: 0.05
+ * /move_group/planner_configs/TRRTkConfigDefault/init_temperature: 10e-6
+ * /move_group/planner_configs/TRRTkConfigDefault/k_constant: 0.0
+ * /move_group/planner_configs/TRRTkConfigDefault/max_states_failed: 10
+ * /move_group/planner_configs/TRRTkConfigDefault/min_temperature: 10e-10
+ * /move_group/planner_configs/TRRTkConfigDefault/range: 0.0
+ * /move_group/planner_configs/TRRTkConfigDefault/temp_change_factor: 2.0
+ * /move_group/planner_configs/TRRTkConfigDefault/type: geometric::TRRT
+ * /move_group/planning_plugin: ompl_interface/OM...
+ * /move_group/planning_scene_monitor/publish_geometry_updates: True
+ * /move_group/planning_scene_monitor/publish_planning_scene: True
+ * /move_group/planning_scene_monitor/publish_state_updates: True
+ * /move_group/planning_scene_monitor/publish_transforms_updates: True
+ * /move_group/request_adapters: default_planner_r...
+ * /move_group/start_state_max_bounds_error: 0.1
+ * /move_group/trajectory_execution/allowed_execution_duration_scaling: 1.2
+ * /move_group/trajectory_execution/allowed_goal_duration_margin: 0.5
+ * /move_group/trajectory_execution/allowed_start_tolerance: 0.0
+ * /move_group/trajectory_execution/execution_duration_monitoring: False
+ * /niryo_robot/hardware_version: ned2
+ * /niryo_robot/info/robot_type: niryo_ned2
+ * /niryo_robot/info/ros_version: noetic
+ * /niryo_robot/python_ros_wrapper/action_connection_timeout: 20
+ * /niryo_robot/python_ros_wrapper/action_execute_timeout: 3600
+ * /niryo_robot/python_ros_wrapper/action_preempt_timeout: 60
+ * /niryo_robot/python_ros_wrapper/service_timeout: 2
+ * /niryo_robot/robot_command_validation/position_limits/x/max: 0.5
+ * /niryo_robot/robot_command_validation/position_limits/x/min: -0.5
+ * /niryo_robot/robot_command_validation/position_limits/y/max: 0.5
+ * /niryo_robot/robot_command_validation/position_limits/y/min: -0.5
+ * /niryo_robot/robot_command_validation/position_limits/z/max: 0.6
+ * /niryo_robot/robot_command_validation/position_limits/z/min: -0.15
+ * /niryo_robot/robot_command_validation/rpy_limits/pitch/max: 3.142
+ * /niryo_robot/robot_command_validation/rpy_limits/pitch/min: -3.142
+ * /niryo_robot/robot_command_validation/rpy_limits/roll/max: 3.142
+ * /niryo_robot/robot_command_validation/rpy_limits/roll/min: -3.142
+ * /niryo_robot/robot_command_validation/rpy_limits/yaw/max: 3.142
+ * /niryo_robot/robot_command_validation/rpy_limits/yaw/min: -3.142
+ * /niryo_robot/robot_state/rate_publish_state: 5.0
+ * /niryo_robot/simulation_mode: True
+ * /niryo_robot_arm_commander/active_publish_rate_sec: 0.1
+ * /niryo_robot_arm_commander/allow_replanning: True
+ * /niryo_robot_arm_commander/command_still_active_max_tries: 3
+ * /niryo_robot_arm_commander/compute_plan_max_tries: 3
+ * /niryo_robot_arm_commander/display_trajectories: False
+ * /niryo_robot_arm_commander/eef_step: 0.02
+ * /niryo_robot_arm_commander/error_tolerance_joint: [0.2, 0.2, 0.2, 0...
+ * /niryo_robot_arm_commander/goal_joint_tolerance: 0.0001
+ * /niryo_robot_arm_commander/goal_orientation_tolerance: 0.001
+ * /niryo_robot_arm_commander/goal_position_tolerance: 0.0001
+ * /niryo_robot_arm_commander/hardware_version: ned2
+ * /niryo_robot_arm_commander/jog_enable_publish_rate: 1.0
+ * /niryo_robot_arm_commander/jog_limits/joints: 0.2
+ * /niryo_robot_arm_commander/jog_limits/rotation: 0.5
+ * /niryo_robot_arm_commander/jog_limits/translation: 0.05
+ * /niryo_robot_arm_commander/jog_timer_rate_sec: 0.15
+ * /niryo_robot_arm_commander/joint_controller_name: /niryo_robot_foll...
+ * /niryo_robot_arm_commander/joint_names: ['joint_1', 'join...
+ * /niryo_robot_arm_commander/log_level: INFO
+ * /niryo_robot_arm_commander/move_group_commander_name: arm
+ * /niryo_robot_arm_commander/reference_frame: world
+ * /niryo_robot_arm_commander/time_without_jog_TCP_limit: 0.5
+ * /niryo_robot_arm_commander/trajectory_frequency: 7
+ * /niryo_robot_arm_commander/trajectory_minimum_timeout: 3.0
+ * /niryo_robot_follow_joint_trajectory_controller/action_monitor_rate: 10
+ * /niryo_robot_follow_joint_trajectory_controller/allow_partial_joints_goal: True
+ * /niryo_robot_follow_joint_trajectory_controller/constraints/goal_time: 1.0
+ * /niryo_robot_follow_joint_trajectory_controller/constraints/joint_1/goal: 0.2
+ * /niryo_robot_follow_joint_trajectory_controller/constraints/joint_1/trajectory: 0.5
+ * /niryo_robot_follow_joint_trajectory_controller/constraints/joint_2/goal: 0.2
+ * /niryo_robot_follow_joint_trajectory_controller/constraints/joint_2/trajectory: 0.5
+ * /niryo_robot_follow_joint_trajectory_controller/constraints/joint_3/goal: 0.2
+ * /niryo_robot_follow_joint_trajectory_controller/constraints/joint_3/trajectory: 0.5
+ * /niryo_robot_follow_joint_trajectory_controller/constraints/joint_4/goal: 0.2
+ * /niryo_robot_follow_joint_trajectory_controller/constraints/joint_4/trajectory: 0.5
+ * /niryo_robot_follow_joint_trajectory_controller/constraints/joint_5/goal: 0.3
+ * /niryo_robot_follow_joint_trajectory_controller/constraints/joint_5/trajectory: 1.0
+ * /niryo_robot_follow_joint_trajectory_controller/constraints/joint_6/goal: 0.3
+ * /niryo_robot_follow_joint_trajectory_controller/constraints/joint_6/trajectory: 1.0
+ * /niryo_robot_follow_joint_trajectory_controller/constraints/stopped_velocity_tolerance: 0.05
+ * /niryo_robot_follow_joint_trajectory_controller/joints: ['joint_1', 'join...
+ * /niryo_robot_follow_joint_trajectory_controller/state_publish_rate: 20
+ * /niryo_robot_follow_joint_trajectory_controller/stop_trajectory_duration: 1.0
+ * /niryo_robot_follow_joint_trajectory_controller/type: position_controll...
+ * /niryo_robot_hardware_interface/can_enabled: False
+ * /niryo_robot_hardware_interface/conveyor/publish_frequency: 2
+ * /niryo_robot_hardware_interface/conveyor/simu_conveyor: False
+ * /niryo_robot_hardware_interface/conveyor/ttl/default_id: 8
+ * /niryo_robot_hardware_interface/conveyor/ttl/direction: 1
+ * /niryo_robot_hardware_interface/conveyor/ttl/pool_id_list: [9, 10]
+ * /niryo_robot_hardware_interface/conveyor/type: fakeStepper
+ * /niryo_robot_hardware_interface/cpu_interface/read_rpi_diagnostics_frequency: 0.25
+ * /niryo_robot_hardware_interface/cpu_interface/simulation_mode: True
+ * /niryo_robot_hardware_interface/cpu_interface/temperature_shutdown_threshold: 85
+ * /niryo_robot_hardware_interface/cpu_interface/temperature_warn_threshold: 75
+ * /niryo_robot_hardware_interface/debug: False
+ * /niryo_robot_hardware_interface/end_effector_interface/button_0/type: free_drive
+ * /niryo_robot_hardware_interface/end_effector_interface/button_1/type: save_position
+ * /niryo_robot_hardware_interface/end_effector_interface/button_2/type: custom
+ * /niryo_robot_hardware_interface/end_effector_interface/check_end_effector_status_frequency: 40.0
+ * /niryo_robot_hardware_interface/end_effector_interface/collision_thresh: 5
+ * /niryo_robot_hardware_interface/end_effector_interface/end_effector_id: 0
+ * /niryo_robot_hardware_interface/end_effector_interface/hardware_type: fake_end_effector
+ * /niryo_robot_hardware_interface/gazebo: False
+ * /niryo_robot_hardware_interface/hardware_version: ned2
+ * /niryo_robot_hardware_interface/joints_interface/calibration_file: ~/.niryo/simulati...
+ * /niryo_robot_hardware_interface/joints_interface/calibration_params/stepper_1/a_1: 450
+ * /niryo_robot_hardware_interface/joints_interface/calibration_params/stepper_1/a_max: 1200
+ * /niryo_robot_hardware_interface/joints_interface/calibration_params/stepper_1/d_1: 450
+ * /niryo_robot_hardware_interface/joints_interface/calibration_params/stepper_1/d_max: 1200
+ * /niryo_robot_hardware_interface/joints_interface/calibration_params/stepper_1/delay: 200
+ * /niryo_robot_hardware_interface/joints_interface/calibration_params/stepper_1/direction: 1
+ * /niryo_robot_hardware_interface/joints_interface/calibration_params/stepper_1/id: 2
+ * /niryo_robot_hardware_interface/joints_interface/calibration_params/stepper_1/stall_threshold: 7
+ * /niryo_robot_hardware_interface/joints_interface/calibration_params/stepper_1/v_1: 3
+ * /niryo_robot_hardware_interface/joints_interface/calibration_params/stepper_1/v_max: 7
+ * /niryo_robot_hardware_interface/joints_interface/calibration_params/stepper_1/v_start: 1
+ * /niryo_robot_hardware_interface/joints_interface/calibration_params/stepper_1/v_stop: 2
+ * /niryo_robot_hardware_interface/joints_interface/calibration_params/stepper_2/a_1: 300
+ * /niryo_robot_hardware_interface/joints_interface/calibration_params/stepper_2/a_max: 600
+ * /niryo_robot_hardware_interface/joints_interface/calibration_params/stepper_2/d_1: 300
+ * /niryo_robot_hardware_interface/joints_interface/calibration_params/stepper_2/d_max: 600
+ * /niryo_robot_hardware_interface/joints_interface/calibration_params/stepper_2/delay: 1000
+ * /niryo_robot_hardware_interface/joints_interface/calibration_params/stepper_2/direction: 1
+ * /niryo_robot_hardware_interface/joints_interface/calibration_params/stepper_2/id: 3
+ * /niryo_robot_hardware_interface/joints_interface/calibration_params/stepper_2/stall_threshold: 6
+ * /niryo_robot_hardware_interface/joints_interface/calibration_params/stepper_2/v_1: 3
+ * /niryo_robot_hardware_interface/joints_interface/calibration_params/stepper_2/v_max: 6
+ * /niryo_robot_hardware_interface/joints_interface/calibration_params/stepper_2/v_start: 1
+ * /niryo_robot_hardware_interface/joints_interface/calibration_params/stepper_2/v_stop: 2
+ * /niryo_robot_hardware_interface/joints_interface/calibration_params/stepper_3/a_1: 450
+ * /niryo_robot_hardware_interface/joints_interface/calibration_params/stepper_3/a_max: 750
+ * /niryo_robot_hardware_interface/joints_interface/calibration_params/stepper_3/d_1: 450
+ * /niryo_robot_hardware_interface/joints_interface/calibration_params/stepper_3/d_max: 750
+ * /niryo_robot_hardware_interface/joints_interface/calibration_params/stepper_3/delay: 1000
+ * /niryo_robot_hardware_interface/joints_interface/calibration_params/stepper_3/direction: -1
+ * /niryo_robot_hardware_interface/joints_interface/calibration_params/stepper_3/id: 4
+ * /niryo_robot_hardware_interface/joints_interface/calibration_params/stepper_3/stall_threshold: 6
+ * /niryo_robot_hardware_interface/joints_interface/calibration_params/stepper_3/v_1: 3
+ * /niryo_robot_hardware_interface/joints_interface/calibration_params/stepper_3/v_max: 6
+ * /niryo_robot_hardware_interface/joints_interface/calibration_params/stepper_3/v_start: 1
+ * /niryo_robot_hardware_interface/joints_interface/calibration_params/stepper_3/v_stop: 2
+ * /niryo_robot_hardware_interface/joints_interface/calibration_timeout: 5
+ * /niryo_robot_hardware_interface/joints_interface/dynamixels/dxl_1/FF1_gain: 0
+ * /niryo_robot_hardware_interface/joints_interface/dynamixels/dxl_1/FF2_gain: 400
+ * /niryo_robot_hardware_interface/joints_interface/dynamixels/dxl_1/acceleration_profile: 200
+ * /niryo_robot_hardware_interface/joints_interface/dynamixels/dxl_1/default_home_position: 0.0
+ * /niryo_robot_hardware_interface/joints_interface/dynamixels/dxl_1/direction: 1
+ * /niryo_robot_hardware_interface/joints_interface/dynamixels/dxl_1/limit_position_max: 2.093
+ * /niryo_robot_hardware_interface/joints_interface/dynamixels/dxl_1/limit_position_min: -2.093
+ * /niryo_robot_hardware_interface/joints_interface/dynamixels/dxl_1/offset_position: -3.1415
+ * /niryo_robot_hardware_interface/joints_interface/dynamixels/dxl_1/position_D_gain: 9520
+ * /niryo_robot_hardware_interface/joints_interface/dynamixels/dxl_1/position_I_gain: 0
+ * /niryo_robot_hardware_interface/joints_interface/dynamixels/dxl_1/position_P_gain: 3264
+ * /niryo_robot_hardware_interface/joints_interface/dynamixels/dxl_1/velocity_I_gain: 0
+ * /niryo_robot_hardware_interface/joints_interface/dynamixels/dxl_1/velocity_P_gain: 0
+ * /niryo_robot_hardware_interface/joints_interface/dynamixels/dxl_1/velocity_profile: 200
+ * /niryo_robot_hardware_interface/joints_interface/dynamixels/dxl_2/FF1_gain: 0
+ * /niryo_robot_hardware_interface/joints_interface/dynamixels/dxl_2/FF2_gain: 0
+ * /niryo_robot_hardware_interface/joints_interface/dynamixels/dxl_2/acceleration_profile: 200
+ * /niryo_robot_hardware_interface/joints_interface/dynamixels/dxl_2/default_home_position: 0.0
+ * /niryo_robot_hardware_interface/joints_interface/dynamixels/dxl_2/direction: -1
+ * /niryo_robot_hardware_interface/joints_interface/dynamixels/dxl_2/limit_position_max: 1.919
+ * /niryo_robot_hardware_interface/joints_interface/dynamixels/dxl_2/limit_position_min: -1.919
+ * /niryo_robot_hardware_interface/joints_interface/dynamixels/dxl_2/offset_position: 3.1415
+ * /niryo_robot_hardware_interface/joints_interface/dynamixels/dxl_2/position_D_gain: 352
+ * /niryo_robot_hardware_interface/joints_interface/dynamixels/dxl_2/position_I_gain: 0
+ * /niryo_robot_hardware_interface/joints_interface/dynamixels/dxl_2/position_P_gain: 2560
+ * /niryo_robot_hardware_interface/joints_interface/dynamixels/dxl_2/velocity_I_gain: 0
+ * /niryo_robot_hardware_interface/joints_interface/dynamixels/dxl_2/velocity_P_gain: 0
+ * /niryo_robot_hardware_interface/joints_interface/dynamixels/dxl_2/velocity_profile: 200
+ * /niryo_robot_hardware_interface/joints_interface/dynamixels/dxl_3/FF1_gain: 0
+ * /niryo_robot_hardware_interface/joints_interface/dynamixels/dxl_3/FF2_gain: 0
+ * /niryo_robot_hardware_interface/joints_interface/dynamixels/dxl_3/acceleration_profile: 200
+ * /niryo_robot_hardware_interface/joints_interface/dynamixels/dxl_3/default_home_position: 0.0
+ * /niryo_robot_hardware_interface/joints_interface/dynamixels/dxl_3/direction: 1
+ * /niryo_robot_hardware_interface/joints_interface/dynamixels/dxl_3/limit_position_max: 2.53
+ * /niryo_robot_hardware_interface/joints_interface/dynamixels/dxl_3/limit_position_min: -2.53
+ * /niryo_robot_hardware_interface/joints_interface/dynamixels/dxl_3/offset_position: -3.1415
+ * /niryo_robot_hardware_interface/joints_interface/dynamixels/dxl_3/position_D_gain: 1424
+ * /niryo_robot_hardware_interface/joints_interface/dynamixels/dxl_3/position_I_gain: 0
+ * /niryo_robot_hardware_interface/joints_interface/dynamixels/dxl_3/position_P_gain: 2560
+ * /niryo_robot_hardware_interface/joints_interface/dynamixels/dxl_3/velocity_I_gain: 0
+ * /niryo_robot_hardware_interface/joints_interface/dynamixels/dxl_3/velocity_P_gain: 0
+ * /niryo_robot_hardware_interface/joints_interface/dynamixels/dxl_3/velocity_profile: 200
+ * /niryo_robot_hardware_interface/joints_interface/homing_offset_file: ~/.niryo/simulati...
+ * /niryo_robot_hardware_interface/joints_interface/joint_1/bus: ttl
+ * /niryo_robot_hardware_interface/joints_interface/joint_1/id: 2
+ * /niryo_robot_hardware_interface/joints_interface/joint_1/name: joint_1
+ * /niryo_robot_hardware_interface/joints_interface/joint_1/type: fakeStepper
+ * /niryo_robot_hardware_interface/joints_interface/joint_2/bus: ttl
+ * /niryo_robot_hardware_interface/joints_interface/joint_2/id: 3
+ * /niryo_robot_hardware_interface/joints_interface/joint_2/name: joint_2
+ * /niryo_robot_hardware_interface/joints_interface/joint_2/type: fakeStepper
+ * /niryo_robot_hardware_interface/joints_interface/joint_3/bus: ttl
+ * /niryo_robot_hardware_interface/joints_interface/joint_3/id: 4
+ * /niryo_robot_hardware_interface/joints_interface/joint_3/name: joint_3
+ * /niryo_robot_hardware_interface/joints_interface/joint_3/type: fakeStepper
+ * /niryo_robot_hardware_interface/joints_interface/joint_4/bus: ttl
+ * /niryo_robot_hardware_interface/joints_interface/joint_4/id: 5
+ * /niryo_robot_hardware_interface/joints_interface/joint_4/name: joint_4
+ * /niryo_robot_hardware_interface/joints_interface/joint_4/type: fakeDxl
+ * /niryo_robot_hardware_interface/joints_interface/joint_5/bus: ttl
+ * /niryo_robot_hardware_interface/joints_interface/joint_5/id: 6
+ * /niryo_robot_hardware_interface/joints_interface/joint_5/name: joint_5
+ * /niryo_robot_hardware_interface/joints_interface/joint_5/type: fakeDxl
+ * /niryo_robot_hardware_interface/joints_interface/joint_6/bus: ttl
+ * /niryo_robot_hardware_interface/joints_interface/joint_6/id: 7
+ * /niryo_robot_hardware_interface/joints_interface/joint_6/name: joint_6
+ * /niryo_robot_hardware_interface/joints_interface/joint_6/type: fakeDxl
+ * /niryo_robot_hardware_interface/joints_interface/ros_control_loop_frequency: 100.0
+ * /niryo_robot_hardware_interface/joints_interface/simulation_mode: True
+ * /niryo_robot_hardware_interface/joints_interface/steppers/stepper_1/a_1: 1260
+ * /niryo_robot_hardware_interface/joints_interface/steppers/stepper_1/a_max: 2500
+ * /niryo_robot_hardware_interface/joints_interface/steppers/stepper_1/d_1: 1228
+ * /niryo_robot_hardware_interface/joints_interface/steppers/stepper_1/d_max: 2500
+ * /niryo_robot_hardware_interface/joints_interface/steppers/stepper_1/default_home_position: 0.0
+ * /niryo_robot_hardware_interface/joints_interface/steppers/stepper_1/direction: 1
+ * /niryo_robot_hardware_interface/joints_interface/steppers/stepper_1/id: 2
+ * /niryo_robot_hardware_interface/joints_interface/steppers/stepper_1/limit_position_max: 2.966
+ * /niryo_robot_hardware_interface/joints_interface/steppers/stepper_1/limit_position_min: -2.966
+ * /niryo_robot_hardware_interface/joints_interface/steppers/stepper_1/motor_ratio: 0.0872
+ * /niryo_robot_hardware_interface/joints_interface/steppers/stepper_1/offset_position: -2.966
+ * /niryo_robot_hardware_interface/joints_interface/steppers/stepper_1/v_1: 500
+ * /niryo_robot_hardware_interface/joints_interface/steppers/stepper_1/v_max: 1500
+ * /niryo_robot_hardware_interface/joints_interface/steppers/stepper_1/v_start: 0
+ * /niryo_robot_hardware_interface/joints_interface/steppers/stepper_1/v_stop: 20
+ * /niryo_robot_hardware_interface/joints_interface/steppers/stepper_2/a_1: 860
+ * /niryo_robot_hardware_interface/joints_interface/steppers/stepper_2/a_max: 1400
+ * /niryo_robot_hardware_interface/joints_interface/steppers/stepper_2/d_1: 860
+ * /niryo_robot_hardware_interface/joints_interface/steppers/stepper_2/d_max: 1400
+ * /niryo_robot_hardware_interface/joints_interface/steppers/stepper_2/default_home_position: 0.5
+ * /niryo_robot_hardware_interface/joints_interface/steppers/stepper_2/direction: -1
+ * /niryo_robot_hardware_interface/joints_interface/steppers/stepper_2/id: 3
+ * /niryo_robot_hardware_interface/joints_interface/steppers/stepper_2/limit_position_max: 0.61
+ * /niryo_robot_hardware_interface/joints_interface/steppers/stepper_2/limit_position_min: -2.09
+ * /niryo_robot_hardware_interface/joints_interface/steppers/stepper_2/motor_ratio: 0.0868
+ * /niryo_robot_hardware_interface/joints_interface/steppers/stepper_2/offset_position: 0.61
+ * /niryo_robot_hardware_interface/joints_interface/steppers/stepper_2/v_1: 300
+ * /niryo_robot_hardware_interface/joints_interface/steppers/stepper_2/v_max: 1000
+ * /niryo_robot_hardware_interface/joints_interface/steppers/stepper_2/v_start: 0
+ * /niryo_robot_hardware_interface/joints_interface/steppers/stepper_2/v_stop: 20
+ * /niryo_robot_hardware_interface/joints_interface/steppers/stepper_3/a_1: 915
+ * /niryo_robot_hardware_interface/joints_interface/steppers/stepper_3/a_max: 1700
+ * /niryo_robot_hardware_interface/joints_interface/steppers/stepper_3/d_1: 983
+ * /niryo_robot_hardware_interface/joints_interface/steppers/stepper_3/d_max: 1700
+ * /niryo_robot_hardware_interface/joints_interface/steppers/stepper_3/default_home_position: -1.25
+ * /niryo_robot_hardware_interface/joints_interface/steppers/stepper_3/direction: 1
+ * /niryo_robot_hardware_interface/joints_interface/steppers/stepper_3/id: 4
+ * /niryo_robot_hardware_interface/joints_interface/steppers/stepper_3/limit_position_max: 1.57
+ * /niryo_robot_hardware_interface/joints_interface/steppers/stepper_3/limit_position_min: -1.34
+ * /niryo_robot_hardware_interface/joints_interface/steppers/stepper_3/motor_ratio: 0.0868
+ * /niryo_robot_hardware_interface/joints_interface/steppers/stepper_3/offset_position: -1.34
+ * /niryo_robot_hardware_interface/joints_interface/steppers/stepper_3/v_1: 400
+ * /niryo_robot_hardware_interface/joints_interface/steppers/stepper_3/v_max: 1200
+ * /niryo_robot_hardware_interface/joints_interface/steppers/stepper_3/v_start: 0
+ * /niryo_robot_hardware_interface/joints_interface/steppers/stepper_3/v_stop: 20
+ * /niryo_robot_hardware_interface/publish_hw_status_frequency: 2.0
+ * /niryo_robot_hardware_interface/publish_software_version_frequency: 2.0
+ * /niryo_robot_hardware_interface/tools_interface/check_tool_connection_frequency: 2.0
+ * /niryo_robot_hardware_interface/tools_interface/gripper_timeout: 3.0
+ * /niryo_robot_hardware_interface/tools_interface/tools_params/id_list: [11, 12, 13, 31, 32]
+ * /niryo_robot_hardware_interface/tools_interface/tools_params/name_list: ['Standard Grippe...
+ * /niryo_robot_hardware_interface/tools_interface/tools_params/params_list: [{'velocity_profi...
+ * /niryo_robot_hardware_interface/tools_interface/tools_params/type_list: ['fakeDxl', 'fake...
+ * /niryo_robot_hardware_interface/tools_interface/vacuum_pump_timeout: 3.0
+ * /niryo_robot_hardware_interface/ttl_driver/bus_params/baudrate: 1000000
+ * /niryo_robot_hardware_interface/ttl_driver/bus_params/uart_device_name: /dev/ttyAMA0
+ * /niryo_robot_hardware_interface/ttl_driver/fake_params/conveyors/firmware: ['0.0.1']
+ * /niryo_robot_hardware_interface/ttl_driver/fake_params/conveyors/id: [8]
+ * /niryo_robot_hardware_interface/ttl_driver/fake_params/conveyors/max_position: [4096]
+ * /niryo_robot_hardware_interface/ttl_driver/fake_params/conveyors/min_position: [0]
+ * /niryo_robot_hardware_interface/ttl_driver/fake_params/conveyors/model_number: [2]
+ * /niryo_robot_hardware_interface/ttl_driver/fake_params/conveyors/position: [0]
+ * /niryo_robot_hardware_interface/ttl_driver/fake_params/conveyors/temperature: [54]
+ * /niryo_robot_hardware_interface/ttl_driver/fake_params/conveyors/velocity: [0]
+ * /niryo_robot_hardware_interface/ttl_driver/fake_params/conveyors/voltage: [12300]
+ * /niryo_robot_hardware_interface/ttl_driver/fake_params/dynamixels/firmware: ['0.0.1', '0.0.1'...
+ * /niryo_robot_hardware_interface/ttl_driver/fake_params/dynamixels/id: [5, 6, 7]
+ * /niryo_robot_hardware_interface/ttl_driver/fake_params/dynamixels/max_position: [4096, 4096, 4096]
+ * /niryo_robot_hardware_interface/ttl_driver/fake_params/dynamixels/min_position: [0, 0, 0]
+ * /niryo_robot_hardware_interface/ttl_driver/fake_params/dynamixels/model_number: [1, 1, 1]
+ * /niryo_robot_hardware_interface/ttl_driver/fake_params/dynamixels/position: [2048, 2048, 2048]
+ * /niryo_robot_hardware_interface/ttl_driver/fake_params/dynamixels/temperature: [50, 52, 54]
+ * /niryo_robot_hardware_interface/ttl_driver/fake_params/dynamixels/velocity: [0, 0, 0]
+ * /niryo_robot_hardware_interface/ttl_driver/fake_params/dynamixels/voltage: [50, 50, 50]
+ * /niryo_robot_hardware_interface/ttl_driver/fake_params/end_effector/firmware: ['0.0.1']
+ * /niryo_robot_hardware_interface/ttl_driver/fake_params/end_effector/id: [0]
+ * /niryo_robot_hardware_interface/ttl_driver/fake_params/end_effector/temperature: [32]
+ * /niryo_robot_hardware_interface/ttl_driver/fake_params/end_effector/voltage: [5000]
+ * /niryo_robot_hardware_interface/ttl_driver/fake_params/steppers/firmware: ['0.0.1', '0.0.1'...
+ * /niryo_robot_hardware_interface/ttl_driver/fake_params/steppers/id: [2, 3, 4]
+ * /niryo_robot_hardware_interface/ttl_driver/fake_params/steppers/max_position: [4096, 4096, 4096]
+ * /niryo_robot_hardware_interface/ttl_driver/fake_params/steppers/min_position: [0, 0, 0]
+ * /niryo_robot_hardware_interface/ttl_driver/fake_params/steppers/model_number: [1, 1, 1]
+ * /niryo_robot_hardware_interface/ttl_driver/fake_params/steppers/position: [1950, 0, 0]
+ * /niryo_robot_hardware_interface/ttl_driver/fake_params/steppers/temperature: [50, 52, 54]
+ * /niryo_robot_hardware_interface/ttl_driver/fake_params/steppers/velocity: [0, 0, 0]
+ * /niryo_robot_hardware_interface/ttl_driver/fake_params/steppers/voltage: [12100, 12200, 12...
+ * /niryo_robot_hardware_interface/ttl_driver/fake_params/tool/firmware: ['0.0.1']
+ * /niryo_robot_hardware_interface/ttl_driver/fake_params/tool/id: [11]
+ * /niryo_robot_hardware_interface/ttl_driver/fake_params/tool/max_position: [4096]
+ * /niryo_robot_hardware_interface/ttl_driver/fake_params/tool/min_position: [0]
+ * /niryo_robot_hardware_interface/ttl_driver/fake_params/tool/model_number: [1]
+ * /niryo_robot_hardware_interface/ttl_driver/fake_params/tool/position: [370]
+ * /niryo_robot_hardware_interface/ttl_driver/fake_params/tool/temperature: [56]
+ * /niryo_robot_hardware_interface/ttl_driver/fake_params/tool/velocity: [0]
+ * /niryo_robot_hardware_interface/ttl_driver/fake_params/tool/voltage: [50]
+ * /niryo_robot_hardware_interface/ttl_driver/hardware_version: ned2
+ * /niryo_robot_hardware_interface/ttl_driver/led_motor: fakeDxl
+ * /niryo_robot_hardware_interface/ttl_driver/simu_conveyor: False
+ * /niryo_robot_hardware_interface/ttl_driver/simu_gripper: True
+ * /niryo_robot_hardware_interface/ttl_driver/simulation_mode: True
+ * /niryo_robot_hardware_interface/ttl_driver/ttl_hardware_control_loop_frequency: 240.0
+ * /niryo_robot_hardware_interface/ttl_driver/ttl_hardware_read_data_frequency: 120.0
+ * /niryo_robot_hardware_interface/ttl_driver/ttl_hardware_read_end_effector_frequency: 13.0
+ * /niryo_robot_hardware_interface/ttl_driver/ttl_hardware_read_status_frequency: 0.7
+ * /niryo_robot_hardware_interface/ttl_driver/ttl_hardware_write_frequency: 120.0
+ * /niryo_robot_hardware_interface/ttl_enabled: True
+ * /niryo_robot_led_ring/default_alternate_period: 1
+ * /niryo_robot_led_ring/default_breath_period: 4
+ * /niryo_robot_led_ring/default_chase_period: 4
+ * /niryo_robot_led_ring/default_colorwipe_period: 5
+ * /niryo_robot_led_ring/default_flashing_period: 0.25
+ * /niryo_robot_led_ring/default_goup_period: 5
+ * /niryo_robot_led_ring/default_goupanddown_period: 5
+ * /niryo_robot_led_ring/default_rainbow_period: 5
+ * /niryo_robot_led_ring/default_rainbowchase_period: 5
+ * /niryo_robot_led_ring/default_rainbowcycle_period: 5
+ * /niryo_robot_led_ring/default_snake_period: 1.5
+ * /niryo_robot_led_ring/enable_led_ring_bcm_pin: 27
+ * /niryo_robot_led_ring/led_brightness: 255
+ * /niryo_robot_led_ring/led_channel: 1
+ * /niryo_robot_led_ring/led_count: 30
+ * /niryo_robot_led_ring/led_dma: 10
+ * /niryo_robot_led_ring/led_freq_hs: 800000
+ * /niryo_robot_led_ring/led_invert: True
+ * /niryo_robot_led_ring/led_offset: 8
+ * /niryo_robot_led_ring/led_pin: 13
+ * /niryo_robot_led_ring/led_ring_markers_publish_rate: 5
+ * /niryo_robot_led_ring/log_level: INFO
+ * /niryo_robot_led_ring/simulation_led_mesh_path: package://niryo_r...
+ * /niryo_robot_led_ring/simulation_led_ring_markers_publish_rate: 20
+ * /niryo_robot_led_ring/simulation_mode: True
+ * /niryo_robot_led_ring/use_mesh: False
+ * /niryo_robot_poses_handlers/dynamic_frame_dir: /root/.niryo/simu...
+ * /niryo_robot_poses_handlers/gazebo_workspaces/gazebo_1: [[0.337, 0.087, 0...
+ * /niryo_robot_poses_handlers/gazebo_workspaces/gazebo_2: [[-0.0915, 0.3415...
+ * /niryo_robot_poses_handlers/grip_dir: /catkin_ws/src/ni...
+ * /niryo_robot_poses_handlers/log_level: INFO
+ * /niryo_robot_poses_handlers/poses_dir: /root/.niryo/simu...
+ * /niryo_robot_poses_handlers/trajectories_dir: /root/.niryo/simu...
+ * /niryo_robot_poses_handlers/workspace_dir: /root/.niryo/simu...
+ * /niryo_robot_programs_manager/autorun_file_name: autorun_config.yaml
+ * /niryo_robot_programs_manager/execute_from_string_program_name: Last Interpreted ...
+ * /niryo_robot_programs_manager/log_level: INFO
+ * /niryo_robot_programs_manager/programs_dir: ~/.niryo/simulati...
+ * /niryo_robot_programs_manager/standalone: False
+ * /niryo_robot_programs_manager_v2/log_level: INFO
+ * /niryo_robot_programs_manager_v2/programs_dir: ~/.niryo/simulati...
+ * /niryo_robot_rpi/adc/address: 54
+ * /niryo_robot_rpi/adc/i2c_bus: 0
+ * /niryo_robot_rpi/adc/v_ref: 4.096
+ * /niryo_robot_rpi/analog_inputs: [{'name': 'AI1', ...
+ * /niryo_robot_rpi/analog_outputs: [{'name': 'AO1', ...
+ * /niryo_robot_rpi/button/gpio: 4
+ * /niryo_robot_rpi/check_interrupt_flag_security_frequency: 4
+ * /niryo_robot_rpi/digital_inputs: [{'name': 'DI1', ...
+ * /niryo_robot_rpi/digital_outputs: [{'name': 'DO1', ...
+ * /niryo_robot_rpi/end_effector_ios/digital_input: DI4
+ * /niryo_robot_rpi/end_effector_ios/digital_output: DO4
+ * /niryo_robot_rpi/fans: [{'pin': 8, 'temp...
+ * /niryo_robot_rpi/hardware_version: ned2
+ * /niryo_robot_rpi/hotspot/button_pin: 5
+ * /niryo_robot_rpi/hotspot/led_pin: 4
+ * /niryo_robot_rpi/log_level: INFO
+ * /niryo_robot_rpi/mcp/address: 32
+ * /niryo_robot_rpi/mcp/i2c_bus: 0
+ * /niryo_robot_rpi/mcp/interrupt_bcm: 26
+ * /niryo_robot_rpi/mcp/num_gpios: 16
+ * /niryo_robot_rpi/publish_io_state_frequency: 10
+ * /niryo_robot_rpi/shutdown_manager/digital_input: 6
+ * /niryo_robot_rpi/shutdown_manager/digital_output: 7
+ * /niryo_robot_rpi/shutdown_manager/pins_type: mcp
+ * /niryo_robot_rpi/sound_card/i2c_address: 26
+ * /niryo_robot_rpi/sound_card/i2c_bus: 1
+ * /niryo_robot_sound/default_volume: 100
+ * /niryo_robot_sound/default_volume_simulation: 10
+ * /niryo_robot_sound/error_sound_delay: 60
+ * /niryo_robot_sound/log_level: INFO
+ * /niryo_robot_sound/max_volume: 100
+ * /niryo_robot_sound/min_volume: 0
+ * /niryo_robot_sound/path_robot_sound: niryo_robot_state...
+ * /niryo_robot_sound/path_user_sound: ~/niryo_robot_sav...
+ * /niryo_robot_sound/path_user_sound_simulation: ~/.niryo/simulati...
+ * /niryo_robot_sound/robot_sounds/calibration_sound: calibration.wav
+ * /niryo_robot_sound/robot_sounds/connection_sound: connected.wav
+ * /niryo_robot_sound/robot_sounds/disconnection_sound: disconnected.wav
+ * /niryo_robot_sound/robot_sounds/error_sound: error.wav
+ * /niryo_robot_sound/robot_sounds/learning_trajectory_sound: learning_trajecto...
+ * /niryo_robot_sound/robot_sounds/reboot_sound: reboot.wav
+ * /niryo_robot_sound/robot_sounds/robot_ready_sound: ready.wav
+ * /niryo_robot_sound/robot_sounds/turn_off_sound: stop.wav
+ * /niryo_robot_sound/robot_sounds/turn_on_sound: booting.wav
+ * /niryo_robot_sound/robot_sounds/warn_sound: warn.wav
+ * /niryo_robot_sound/simulation_mode: True
+ * /niryo_robot_sound/sound_publish_rate: 1.0
+ * /niryo_robot_sound/sound_user_publish_rate: 1.0
+ * /niryo_robot_sound/volume_factor: 1.0
+ * /niryo_robot_sound/volume_file_path: ~/niryo_robot_sav...
+ * /niryo_robot_sound/volume_file_path_simulation: ~/.niryo/simulati...
+ * /niryo_robot_sound/volume_publish_rate: 1.0
+ * /niryo_robot_status/check_nodes_frequency: 0.2
+ * /niryo_robot_status/initialisation_params: ['/niryo_robot_ar...
+ * /niryo_robot_status/log_level: INFO
+ * /niryo_robot_status/node_logs: ['/niryo_robot_ha...
+ * /niryo_robot_status/vital_nodes_common: ['/controller_spa...
+ * /niryo_robot_status/vital_nodes_real: ['/niryo_robot_vi...
+ * /niryo_robot_tools_commander/command_list/activate_digital_io: 21
+ * /niryo_robot_tools_commander/command_list/close_gripper: 2
+ * /niryo_robot_tools_commander/command_list/deactivate_digital_io: 22
+ * /niryo_robot_tools_commander/command_list/open_gripper: 1
+ * /niryo_robot_tools_commander/command_list/pull_air_vacuum_pump: 10
+ * /niryo_robot_tools_commander/command_list/push_air_vacuum_pump: 11
+ * /niryo_robot_tools_commander/command_list/setup_digital_io: 20
+ * /niryo_robot_tools_commander/gazebo: False
+ * /niryo_robot_tools_commander/hardware_version: ned2
+ * /niryo_robot_tools_commander/log_level: INFO
+ * /niryo_robot_tools_commander/move_group_tool_commander_name: tool
+ * /niryo_robot_tools_commander/namespace_topics: /niryo_robot/tools/
+ * /niryo_robot_tools_commander/reference_frame: world
+ * /niryo_robot_tools_commander/simu_gripper: True
+ * /niryo_robot_tools_commander/state_dict/gripper_close: 17
+ * /niryo_robot_tools_commander/state_dict/gripper_open: 16
+ * /niryo_robot_tools_commander/state_dict/ping_error: 2
+ * /niryo_robot_tools_commander/state_dict/ping_ok: 1
+ * /niryo_robot_tools_commander/state_dict/ros_communication_problem: 160
+ * /niryo_robot_tools_commander/state_dict/timeout: 4
+ * /niryo_robot_tools_commander/state_dict/vacuum_pump_pulled: 32
+ * /niryo_robot_tools_commander/state_dict/vacuum_pump_pushed: 33
+ * /niryo_robot_tools_commander/state_dict/wrong_id: 3
+ * /niryo_robot_tools_commander/tool_list: [{'name': 'No Too...
+ * /niryo_robot_user_interface/ip_address:
+ * /niryo_robot_user_interface/log_level: INFO
+ * /niryo_robot_user_interface/tcp_port: 40001
+ * /robot_description: <?xml version="1....
+ * /robot_description_kinematics/arm/kinematics_solver: kdl_kinematics_pl...
+ * /robot_description_kinematics/arm/kinematics_solver_search_resolution: 0.005
+ * /robot_description_kinematics/arm/kinematics_solver_timeout: 0.005
+ * /robot_description_planning/joint_limits/joint_1/has_acceleration_limits: True
+ * /robot_description_planning/joint_limits/joint_1/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/joint_1/max_acceleration: 2.2
+ * /robot_description_planning/joint_limits/joint_1/max_velocity: 2.4
+ * /robot_description_planning/joint_limits/joint_2/has_acceleration_limits: True
+ * /robot_description_planning/joint_limits/joint_2/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/joint_2/max_acceleration: 1.5
+ * /robot_description_planning/joint_limits/joint_2/max_velocity: 2.0
+ * /robot_description_planning/joint_limits/joint_3/has_acceleration_limits: True
+ * /robot_description_planning/joint_limits/joint_3/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/joint_3/max_acceleration: 1.6
+ * /robot_description_planning/joint_limits/joint_3/max_velocity: 2.5
+ * /robot_description_planning/joint_limits/joint_4/has_acceleration_limits: True
+ * /robot_description_planning/joint_limits/joint_4/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/joint_4/max_acceleration: 2.0
+ * /robot_description_planning/joint_limits/joint_4/max_velocity: 2.0
+ * /robot_description_planning/joint_limits/joint_5/has_acceleration_limits: True
+ * /robot_description_planning/joint_limits/joint_5/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/joint_5/max_acceleration: 2.0
+ * /robot_description_planning/joint_limits/joint_5/max_velocity: 2.0
+ * /robot_description_planning/joint_limits/joint_6/has_acceleration_limits: True
+ * /robot_description_planning/joint_limits/joint_6/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/joint_6/max_acceleration: 2.0
+ * /robot_description_planning/joint_limits/joint_6/max_velocity: 1.57
+ * /robot_description_semantic: <?xml version="1....
+ * /robot_description_tf2: <?xml version="1....
+ * /rosapi/params_glob: [*]
+ * /rosapi/services_glob: [*]
+ * /rosapi/topics_glob: [*]
+ * /rosbridge_websocket/address: 0.0.0.0
+ * /rosbridge_websocket/authenticate: False
+ * /rosbridge_websocket/bson_only_mode: False
+ * /rosbridge_websocket/delay_between_messages: 0
+ * /rosbridge_websocket/fragment_timeout: 600
+ * /rosbridge_websocket/max_message_size: None
+ * /rosbridge_websocket/params_glob: [*]
+ * /rosbridge_websocket/port: 9090
+ * /rosbridge_websocket/retry_startup_delay: 5
+ * /rosbridge_websocket/services_glob: [*]
+ * /rosbridge_websocket/topics_glob: [*]
+ * /rosbridge_websocket/unregister_timeout: 10
+ * /rosbridge_websocket/use_compression: False
+ * /rosbridge_websocket/websocket_external_port: None
+ * /rosbridge_websocket/websocket_ping_interval: 3
+ * /rosbridge_websocket/websocket_ping_timeout: 10
+ * /rosdistro: noetic
+ * /rosversion: 1.17.4
+
+NODES
+  /
+    controller_spawner (controller_manager/spawner)
+    foxglove_spawner (niryo_robot_bringup/foxglove_spawner.py)
+    move_group (moveit_ros_move_group/move_group)
+    niryo_robot_arm_commander (niryo_robot_arm_commander/robot_commander_node.py)
+    niryo_robot_hardware_interface (niryo_robot_hardware_interface/niryo_robot_hardware_interface_node)
+    niryo_robot_led_ring (niryo_robot_led_ring/led_ring_node.py)
+    niryo_robot_poses_handlers (niryo_robot_poses_handlers/poses_handlers_node.py)
+    niryo_robot_programs_manager (niryo_robot_programs_manager/programs_manager_node.py)
+    niryo_robot_programs_manager_v2 (niryo_robot_programs_manager_v2/programs_manager_node.py)
+    niryo_robot_rpi (niryo_robot_rpi/fake_rpi_node.py)
+    niryo_robot_sound (niryo_robot_sound/sound_interface_node.py)
+    niryo_robot_status (niryo_robot_status/robot_status_node.py)
+    niryo_robot_tools_commander (niryo_robot_tools_commander/tool_commander_node.py)
+    niryo_robot_user_interface (niryo_robot_user_interface/user_interface_node.py)
+    robot_state_publisher (robot_state_publisher/robot_state_publisher)
+    rosapi (rosapi/rosapi_node)
+    rosbridge_websocket (rosbridge_server/rosbridge_websocket)
+    rviz (rviz/rviz)
+    tf2_web_republisher (tf2_web_republisher/tf2_web_republisher)
+
+ROS_MASTER_URI=http://localhost:11311
+
+process[tf2_web_republisher-1]: started with pid [12846]
+process[rosbridge_websocket-2]: started with pid [12847]
+process[rosapi-3]: started with pid [12848]
+process[foxglove_spawner-4]: started with pid [12849]
+/usr/bin/env: ‘python3\r’: No such file or directory
+process[controller_spawner-5]: started with pid [12850]
+process[robot_state_publisher-6]: started with pid [12856]
+process[niryo_robot_hardware_interface-7]: started with pid [12859]
+[foxglove_spawner-4] process has died [pid 12849, exit code 127, cmd /catkin_ws/src/niryo_robot_bringup/scripts/foxglove_spawner.py __name:=foxglove_spawner __log:=/root/.ros/log/a3b91926-b421-11f0-9d3d-a2e873e81297/foxglove_spawner-4.log].
+log file: /root/.ros/log/a3b91926-b421-11f0-9d3d-a2e873e81297/foxglove_spawner-4*.log
+process[move_group-8]: started with pid [12860]
+process[niryo_robot_arm_commander-9]: started with pid [12861]
+[INFO] [1761672477.939617616]: CpuInterfaceCore::ctor - Started
+process[niryo_robot_tools_commander-10]: started with pid [12877]
+process[niryo_robot_poses_handlers-11]: started with pid [12880]
+process[niryo_robot_programs_manager-12]: started with pid [12881]
+process[niryo_robot_programs_manager_v2-13]: started with pid [12882]
+process[niryo_robot_user_interface-14]: started with pid [12885]
+process[niryo_robot_status-15]: started with pid [12886]
+process[niryo_robot_rpi-16]: started with pid [12888]
+[INFO] [1761672478.248064057]: TtlInterfaceCore::startControlLoop - Start control loop
+process[niryo_robot_sound-17]: started with pid [12891]
+process[niryo_robot_led_ring-18]: started with pid [12894]
+process[rviz-19]: started with pid [12898]
+[WARN] [1761672478.577327998]: Falling back to using the move_group node's namespace (deprecated Melodic behavior).
+[INFO] [1761672478.771948761]: EndEffectorInterfaceCore::initParameters : configure button 0 of type free_drive
+[INFO] [1761672478.773229955]: EndEffectorInterfaceCore::initParameters : configure button 1 of type save_position
+[INFO] [1761672478.773844327]: EndEffectorInterfaceCore::initParameters : configure button 2 of type custom
+[INFO] [1761672478.774221634]: EndEffectorInterfaceCore::ctor - Set end effector success
+[INFO] [1761672478.911410]: Programs Manager - Started
+[INFO] [1761672479.001003]: Niryo end effector panel started
+Traceback (most recent call last):
+  File "/catkin_ws/devel/lib/niryo_robot_programs_manager_v2/programs_manager_node.py", line 15, in <module>
+    exec(compile(fh.read(), python_script, 'exec'), context)
+  File "/catkin_ws/src/niryo_robot_programs_manager_v2/scripts/programs_manager_node.py", line 321, in <module>
+    node = ProgramManagerNode()
+  File "/catkin_ws/src/niryo_robot_programs_manager_v2/scripts/programs_manager_node.py", line 43, in __init__
+    database_path = os.path.expanduser(rospy.get_param('/niryo_robot_database/database_path'))
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/client.py", line 468, in get_param
+    return _param_server[param_name] #MasterProxy does all the magic for us
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/msproxy.py", line 123, in __getitem__
+    raise KeyError(key)
+KeyError: '/niryo_robot_database/database_path'
+[INFO] [1761672479.048747]: Poses Handlers - Started
+[INFO] [1761672479.075258]: Led Ring Commander - Initialisation
+[INFO] [1761672479.181776]: Python ROS Wrapper ready
+[INFO] [1761672479.185541]: TCP Server - Started on port 40001
+[INFO] [1761672479.189003]: User Interface Node - Started
+QStandardPaths: XDG_RUNTIME_DIR not set, defaulting to '/tmp/runtime-root'
+[INFO] [1761672479.292653494]: JointHardwareInterface::init - add stepper joint success
+[INFO] [1761672479.324126]: Sound loop started
+[ERROR] [1761672479.380671]: Please install ffmpeg with "sudo apt install ffmpeg" to use the sound interface.
+[ERROR] [1761672479.393145]: Please install ffmpeg with "sudo apt install ffmpeg" to use the sound interface.
+[ERROR] [1761672479.401076]: Please install ffmpeg with "sudo apt install ffmpeg" to use the sound interface.
+[ERROR] [1761672479.413422]: Please install ffmpeg with "sudo apt install ffmpeg" to use the sound interface.
+[ERROR] [1761672479.420557]: Please install ffmpeg with "sudo apt install ffmpeg" to use the sound interface.
+[ERROR] [1761672479.430000]: Please install ffmpeg with "sudo apt install ffmpeg" to use the sound interface.
+[ERROR] [1761672479.439237]: Please install ffmpeg with "sudo apt install ffmpeg" to use the sound interface.
+[ERROR] [1761672479.447736]: Please install ffmpeg with "sudo apt install ffmpeg" to use the sound interface.
+[ERROR] [1761672479.457653]: Please install ffmpeg with "sudo apt install ffmpeg" to use the sound interface.
+[ERROR] [1761672479.463217]: Please install ffmpeg with "sudo apt install ffmpeg" to use the sound interface.
+[ERROR] [1761672479.489055]: Please install ffmpeg with "sudo apt install ffmpeg" to use the sound interface.
+[INFO] [1761672479.498288]: Sound Interface - Started
+[INFO] [1761672479.501889106]: TtlInterfaceCore::scanTools - Scan tools...
+[INFO] [1761672479.502111623]: JointHardwareInterface::init - add stepper joint success
+[INFO] [1761672479.553005483]: ToolsInterfaceCore::_callbackPingAndSetDxlTool - Set tool success !
+[INFO] [1761672479.555917]: Tools Commander - Started
+[INFO] [1761672479.709595888]: JointHardwareInterface::init - add stepper joint success
+[niryo_robot_programs_manager_v2-13] process has died [pid 12882, exit code 1, cmd /catkin_ws/devel/lib/niryo_robot_programs_manager_v2/programs_manager_node.py __name:=niryo_robot_programs_manager_v2 __log:=/root/.ros/log/a3b91926-b421-11f0-9d3d-a2e873e81297/niryo_robot_programs_manager_v2-13.log].
+log file: /root/.ros/log/a3b91926-b421-11f0-9d3d-a2e873e81297/niryo_robot_programs_manager_v2-13*.log
+[INFO] [1761672479.915202547]: JointHardwareInterface::init - add dxl joint success
+[INFO] [1761672480.119652]: Led Ring Commander - Started
+[INFO] [1761672480.120531152]: JointHardwareInterface::init - add dxl joint success
+[INFO] [1761672480.325288960]: JointHardwareInterface::init - add dxl joint success
+[INFO] [1761672480.342864621]: Calibration Interface - Calibration interface started
+[INFO] [1761672480.380423120]: JointsInterfaceCore::init - Started
+[INFO] [1761672481.887620867]: Ready to take commands for planning group arm.
+[INFO] [1761672481.896437]: Arm commander - MoveIt! successfully connected to move_group 'arm'
+[INFO] [1761672482.029844]: Arm Commander - Started
+
+
+"<?xml version=\"1.0\" ?>\n<!-- ===================================================================================\
+  \ -->\n<!-- |    This document was autogenerated by xacro from /catkin_ws/src/niryo_robot_description/urdf/ned2/niryo_ned2.urdf.xacro\
+  \ | -->\n<!-- |    EDITING THIS FILE BY HAND IS NOT RECOMMENDED                \
+  \                 | -->\n<!-- ===================================================================================\
+  \ -->\n<robot name=\"niryo_ned2\">\n  <!-- Properties -->\n  <!-- Links -->\n  <link\
+  \ name=\"world\"/>\n  <link name=\"base_link\">\n    <inertial>\n      <origin rpy=\"\
+  0 0 0\" xyz=\"-0.008924 0.0001357 0.052392\"/>\n      <mass value=\"0.71142\"/>\n\
+  \      <inertia ixx=\"0.0017\" ixy=\"0.0\" ixz=\"0.0\" iyy=\"0.0017\" iyz=\"0.0\"\
+  \ izz=\"0.0032\"/>\n    </inertial>\n    <visual>\n      <origin rpy=\"0 0 0\" xyz=\"\
+  0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://niryo_robot_description/meshes/ned2/collada/base_link.dae\"\
+  />\n      </geometry>\n    </visual>\n    <collision>\n      <origin rpy=\"-1.570796326795\
+  \ 0 0\" xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://niryo_robot_description/meshes/ned2/stl/base_link.stl\"\
+  />\n      </geometry>\n    </collision>\n  </link>\n  <link name=\"led_ring_link\"\
+  >\n    <!--\n        <visual>\n            <origin xyz=\"0 0 0\"\n             \
+  \       rpy=\"0 0 0\"/>\n            <geometry>\n                <cylinder length=\"\
+  0.0019\" radius=\"0.0775\"/>\n            </geometry>\n            <material\n \
+  \                   name=\"\">\n                <color\n                       \
+  \ rgba=\"1 1 1 0.25\"/>\n            </material>\n        </visual> -->\n  </link>\n\
+  \  <link name=\"shoulder_link\">\n    <inertial>\n      <origin rpy=\"0 0 0\" xyz=\"\
+  -0.031951 0.0080419 0.030675\"/>\n      <mass value=\"0.35056\"/>\n      <inertia\
+  \ ixx=\"0.00023875\" ixy=\"2.3853E-08\" ixz=\"2.0596E-06\" iyy=\"0.00032638\" iyz=\"\
+  -8.9319E-07\" izz=\"0.00030089\"/>\n    </inertial>\n    <visual>\n      <origin\
+  \ rpy=\"0 0 -1.570796326795\" xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"\
+  package://niryo_robot_description/meshes/ned2/collada/shoulder_link.dae\"/>\n  \
+  \    </geometry>\n    </visual>\n    <collision>\n      <origin rpy=\"0 0 -1.570796326795\"\
+  \ xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://niryo_robot_description/meshes/ned2/stl/shoulder_link.stl\"\
+  />\n      </geometry>\n    </collision>\n  </link>\n  <link name=\"arm_link\">\n\
+  \    <inertial>\n      <origin rpy=\"0 3.14159265359 0\" xyz=\"-0.00096976 0.086432\
+  \ 0.0038832\"/>\n      <mass value=\"1.0838\"/>\n      <inertia ixx=\"0.008194\"\
+  \ ixy=\"0.00015602\" ixz=\"-3.434E-06\" iyy=\"0.0011945\" iyz=\"-0.00031298\" izz=\"\
+  0.007915\"/>\n    </inertial>\n    <visual>\n      <origin rpy=\"0 3.14159265359\
+  \ 0\" xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://niryo_robot_description/meshes/ned2/collada/arm_link.dae\"\
+  />\n      </geometry>\n    </visual>\n    <collision>\n      <origin rpy=\"0 3.14159265359\
+  \ 0\" xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://niryo_robot_description/meshes/ned2/stl/arm_link.stl\"\
+  />\n      </geometry>\n    </collision>\n  </link>\n  <link name=\"elbow_link\"\
+  >\n    <inertial>\n      <origin rpy=\"0 3.14159265359 0\" xyz=\"-0.019703 0.037336\
+  \ -1.7431E-09\"/>\n      <mass value=\"0.22126\"/>\n      <inertia ixx=\"0.00011754\"\
+  \ ixy=\"-1.2314E-05\" ixz=\"-6.2064E-11\" iyy=\"0.00020851\" iyz=\"9.2393E-11\"\
+  \ izz=\"0.00022753\"/>\n    </inertial>\n    <visual>\n      <origin rpy=\"0 3.14159265359\
+  \ -1.570796326795\" xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"\
+  package://niryo_robot_description/meshes/ned2/collada/elbow_link.dae\"/>\n     \
+  \ </geometry>\n    </visual>\n    <collision>\n      <origin rpy=\"0 3.14159265359\
+  \ -1.570796326795\" xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"\
+  package://niryo_robot_description/meshes/ned2/stl/elbow_link.stl\"/>\n      </geometry>\n\
+  \    </collision>\n  </link>\n  <link name=\"forearm_link\">\n    <inertial>\n \
+  \     <origin rpy=\"0 0 0\" xyz=\"-0.0049532 7.8351E-06 0.08106\"/>\n      <mass\
+  \ value=\"0.35686\"/>\n      <inertia ixx=\"0.0013664\" ixy=\"-9.6367E-08\" ixz=\"\
+  0.00013594\" iyy=\"0.0014781\" iyz=\"-1.4596E-07\" izz=\"0.00023715\"/>\n    </inertial>\n\
+  \    <visual>\n      <origin rpy=\"0 0 -1.570796326795\" xyz=\"0 0 0\"/>\n     \
+  \ <geometry>\n        <mesh filename=\"package://niryo_robot_description/meshes/ned2/collada/forearm_link.dae\"\
+  />\n      </geometry>\n    </visual>\n    <collision>\n      <origin rpy=\"0 0 -1.570796326795\"\
+  \ xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://niryo_robot_description/meshes/ned2/stl/forearm_link.stl\"\
+  />\n      </geometry>\n    </collision>\n  </link>\n  <!-- add collision for the\
+  \ motor of joint 5\n    <link name=\"joint5_motor\">\n        <inertial>\n     \
+  \       <origin xyz=\"0 0 0.015\" rpy=\"0 0 0\"/>\n            <mass value=\"0.203543862275952\"\
+  />\n            <inertia ixx=\"0.0015\" ixy=\"0.0\" ixz=\"0.0\" iyy=\"0.0015\" iyz=\"\
+  0.0\" izz=\"0.0015\"/>\n        </inertial>\n        <collision>\n            <origin\
+  \ xyz=\"0 0 0.015\" rpy=\"0 0 0\"/>\n            <geometry>\n                <box\
+  \ size=\"0.047 0.0285 0.03\"/>\n            </geometry>\n        </collision>\n\
+  \    </link> -->\n  <link name=\"wrist_link\">\n    <inertial>\n      <origin rpy=\"\
+  0 0 0\" xyz=\"-0.019666 0.037312 0.0\"/>\n      <mass value=\"0.22126\"/>\n    \
+  \  <inertia ixx=\"0.0015\" ixy=\"0.0\" ixz=\"0.0\" iyy=\"0.0015\" iyz=\"0.0\" izz=\"\
+  0.0015\"/>\n    </inertial>\n    <visual>\n      <origin rpy=\"0 0 -1.570796326795\"\
+  \ xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://niryo_robot_description/meshes/ned2/collada/wrist_link.dae\"\
+  />\n      </geometry>\n    </visual>\n    <collision>\n      <origin rpy=\"0 0 -1.570796326795\"\
+  \ xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://niryo_robot_description/meshes/ned2/stl/wrist_link.stl\"\
+  />\n      </geometry>\n    </collision>\n  </link>\n  <link name=\"hand_link\">\n\
+  \    <inertial>\n      <origin rpy=\"0 0 0\" xyz=\"0 0 0.009\"/>\n      <mass value=\"\
+  0.0070027\"/>\n      <inertia ixx=\"0.0015\" ixy=\"0.0\" ixz=\"0.0\" iyy=\"0.0015\"\
+  \ iyz=\"0.0\" izz=\"0.0015\"/>\n    </inertial>\n    <visual>\n      <origin rpy=\"\
+  0 0 -1.570796326795\" xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"\
+  package://niryo_robot_description/meshes/ned2/collada/hand_link.dae\"/>\n      </geometry>\n\
+  \    </visual>\n    <collision>\n      <origin rpy=\"0 0 -1.570796326795\" xyz=\"\
+  0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://niryo_robot_description/meshes/ned2/stl/hand_link.stl\"\
+  />\n      </geometry>\n    </collision>\n  </link>\n  <link name=\"tool_link\">\n\
+  \    </link>\n  <!-- Joints -->\n  <joint name=\"joint_world\" type=\"fixed\">\n\
+  \    <parent link=\"world\"/>\n    <child link=\"base_link\"/>\n    <origin rpy=\"\
+  0 0 0\" xyz=\"0 0 0\"/>\n  </joint>\n  <joint name=\"joint_1\" type=\"revolute\"\
+  >\n    <origin rpy=\"0 0 0\" xyz=\"0 0 0.1013\"/>\n    <parent link=\"base_link\"\
+  />\n    <child link=\"shoulder_link\"/>\n    <axis xyz=\"0 0 1\"/>\n    <limit effort=\"\
+  10.0\" lower=\"-2.999871918328051\" upper=\"2.999871918328051\" velocity=\"10.0\"\
+  />\n  </joint>\n  <joint name=\"joint_2\" type=\"revolute\">\n    <origin rpy=\"\
+  1.570796326795 0 0\" xyz=\"0 0 0.065\"/>\n    <parent link=\"shoulder_link\"/>\n\
+  \    <child link=\"arm_link\"/>\n    <axis xyz=\"0 0 1\"/>\n    <limit effort=\"\
+  10.0\" lower=\"-1.8325957145941667\" upper=\"0.6101671064972578\" velocity=\"8.0\"\
+  />\n  </joint>\n  <joint name=\"joint_3\" type=\"revolute\">\n    <origin rpy=\"\
+  0 0 1.570796326795\" xyz=\"0.012 0.221 0\"/>\n    <parent link=\"arm_link\"/>\n\
+  \    <child link=\"elbow_link\"/>\n    <axis xyz=\"0 0 1\"/>\n    <limit effort=\"\
+  7.0\" lower=\"-1.3400637996813345\" upper=\"1.5700981950942021\" velocity=\"8.0\"\
+  />\n  </joint>\n  <joint name=\"joint_4\" type=\"revolute\">\n    <origin rpy=\"\
+  1.570796326795 0 0\" xyz=\"0.0325 -0.065 0\"/>\n    <parent link=\"elbow_link\"\
+  />\n    <child link=\"forearm_link\"/>\n    <axis xyz=\"0 0 1\"/>\n    <limit effort=\"\
+  7.0\" lower=\"-2.090031779263347\" upper=\"2.090031779263347\" velocity=\"2.0\"\
+  />\n  </joint>\n  <joint name=\"joint_5\" type=\"revolute\">\n    <origin rpy=\"\
+  -1.570796326795 0 0\" xyz=\"0 0 0.17\"/>\n    <parent link=\"forearm_link\"/>\n\
+  \    <child link=\"wrist_link\"/>\n    <axis xyz=\"0 0 1\"/>\n    <limit effort=\"\
+  6.0\" lower=\"-1.9200367101190883\" upper=\"1.9228292369222795\" velocity=\"2.0\"\
+  />\n  </joint>\n  <joint name=\"joint_6\" type=\"revolute\">\n    <origin rpy=\"\
+  1.570796326795 0 0\" xyz=\"0.00925 -0.0197 0\"/>\n    <parent link=\"wrist_link\"\
+  />\n    <child link=\"hand_link\"/>\n    <axis xyz=\"0 0 1\"/>\n    <limit effort=\"\
+  5.0\" lower=\"-2.530029283691147\" upper=\"2.530029283691147\" velocity=\"2.0\"\
+  />\n  </joint>\n  <joint name=\"hand_tool_joint\" type=\"fixed\">\n    <parent link=\"\
+  hand_link\"/>\n    <child link=\"tool_link\"/>\n    <origin rpy=\"3.14159265359\
+  \ -1.570796326795 0\" xyz=\"0 0 0.0285\"/>\n  </joint>\n  <!--\n    <joint name=\"\
+  joint_test\" type=\"fixed\">\n        <origin xyz=\"-0.03 0 0.158\" rpy=\"0 -${PI/2}\
+  \ 0\"/>\n        <parent link=\"forearm_link\"/>\n        <child link=\"joint5_motor\"\
+  />\n    </joint> -->\n  <joint name=\"joint_led_ring\" type=\"fixed\">\n    <parent\
+  \ link=\"world\"/>\n    <child link=\"led_ring_link\"/>\n    <origin rpy=\"0 0 0\"\
+  \ xyz=\"0 0 0.0923\"/>\n  </joint>\n</robot>\n\n"

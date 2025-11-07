@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Launch arguments -->
+  <arg name="paused" default="false"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="gui" default="true"/>
+  <arg name="headless" default="false"/>
+  <arg name="debug" default="false"/>
+
+  <!-- Start Gazebo with an empty world -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+    <arg name="gui" value="$(arg gui)"/>
+    <arg name="headless" value="$(arg headless)"/>
+    <arg name="debug" value="$(arg debug)"/>
+  </include>
+
+  <!-- Load the URDF into the ROS Parameter Server using xacro -->
+  <param name="robot_description" command="$(find xacro)/xacro $(find ned2_gazebo_sim)/urdf/niryo_ned2.urdf.xacro"/>
+
+  <!-- Spawn the robot in Gazebo -->
+  <node name="spawn_ned2_urdf" pkg="gazebo_ros" type="spawn_model" 
+        args="-param robot_description -urdf -model ned2 -x 0 -y 0 -z 0.1"
+        output="screen"/>
+
+  <!-- Robot state publisher -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" output="screen"/>
+
+  <!-- Joint state publisher -->
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" output="screen"/>
+
+</launch>

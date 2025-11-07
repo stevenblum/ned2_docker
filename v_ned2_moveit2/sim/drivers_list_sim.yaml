@@ -1,0 +1,8 @@
+rosbridge_port: 9090
+
+robot_namespaces:
+  - ""
+
+robot_ips:
+  - "ned2_sim"
+

@@ -1,0 +1,81 @@
+Needs to be on ubuntu 18 and ros melodic
+
+### FROM CHAT GPT
+and why even though roslibpy is nominally installed, the version you have (2.0.0) doesn’t include the actionlib submodule — that subpackage was removed in later versions of roslibpy.
+
+The Niryo ROS 2 driver (niryo_ned_ros2_driver) was built for roslibpy==1.6.x, where roslibpy.actionlib still existed.
+
+
+
+I watched a video that included these steps:
+https://www.youtube.com/watch?v=Vu9hOwcL_GQ
+
+Prerequisites:
+- Ubuntu 18.04
+- ROS Melodic
+- build-essential
+- sqlite3
+- ffmpeg
+
+METHOD 1: Quick Installation via rosdepFor each package, we have referenced all the dependies in their respective package.xml, which allows to install each dependencey via rosdep command:
+rosdep update
+rosdep install --from-paths src --ignore-src --default-yes --rosdistro melodic --skip-keys "python-rps.gpio"
+
+METHOD 2: Manual Installation of Dependencies
+ROS Packages that are needed:
+- catkin
+- python-catkin-pkg
+- python-pymodbus
+- python-rosdistro
+- python-rospkg
+- python-rosdep-modules
+- python-rosinstall
+- python-rosinstall-generator
+- python-wstool
+
+Melodic Specific Packages that are needed:
+- moveit
+- control
+- controllers
+- tf2-web-republisher
+- resbridge-server
+- joint-state-publisher-gui
+
+To install a ROS melodic's pacakge on Ubuntu
+- sudo apt install ros-melodic <package-name>
+
+# THE VIDEOS SPECIFC STEPS:
+mkdir -p ned_sim_tut/src
+cd ned_sim_tut/src
+git clone https://github.com/NiryoRobotics/ned_ros.git
+ls 
+cd ..
+rosdep update
+rosdep install --from-paths src ---ignore-src --default-yes --rosdistro melodic --skip-keys "python-rpt.gpto"
+catkin_make
+source devel/setupbash.
+echo "source $(pwd)/devel/setup.bash"
+source ~/.bashrc
+
+Also, he said The python environment is installed with the requirements_ned2.txt
+But he didnt show this, but I would like to include it, or a similar command
+> pip2 install -r src/requirements_ned2.txt
+
+New Terminal:
+gedit ~/.bashrc
+# Commenting out previous workspace directory
+
+roscore # Verify roscore is working
+
+# New Terminal
+roslaunch niryo_robot_description display.launch
+
+# New Terminal
+roslaunch niryo_robot_bringup desktop_rviz_simulation.launch
+
+# New Terminal
+roslaunch niryo_robot_bringup desktop_gazebo_simulation.launch
+
+roslaunch niryo_robot_bringup niryo_ned2_simulation.launch
+
+\catkin_ws\src\niryo_robot_description\urdf\ned2\niryo_ned2_gripper1_n_camera.urdf.xacro

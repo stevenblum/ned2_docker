@@ -1,0 +1,15 @@
+The structure of the Packages
+
+1 desktop_rviz_simulation
+args:<arg name="log_level" default="INFO" />
+    <arg name="hardware_version" default="ned2"/>
+    <arg name="debug" default="false"/>
+    <arg name="gui" default="true"/>
+    <arg name="conf_location" default="version.txt"/>
+    <arg name="simu_gripper" default="false" />
+    <arg name="simu_conveyor" default="false"/>
+    <arg name="database" default="false" />
+  1.a.  niryo_$(arg hardware_version)_simulation.launch
+  1.b   rviz node
+    1.b.i: rviz config file: niryo_$(arg hardware_version)_simulation.rviz
+           args, -d $(find niryo_robot_description)/config/default_config.rviz

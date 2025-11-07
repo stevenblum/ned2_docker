@@ -1,0 +1,70 @@
+# docker build -t ned2_sim -f dockerfile.ned2_sim .
+# docker run -it --rm --name ned2_sim --network ros_net  -e DISPLAY=host.docker.internal:0.0 ned2_gazebo
+# chmod +x /catkin_ws/devel/setup.bash
+# docker exec -it ned2_sim bash
+# source /catkin_ws/devel/setup.bash
+# roslaunch rosbridge_server rosbridge_websocket.launch port:=9090 address:=0.0.0.0
+# rosrun topic_tools relay /joint_states /niryo_robot/joint_states
+# roslaunch niryo_robot_gazebo niryo_robot_gazebo_world.launch.xml world_name:=niryo_cube_world hardware_version:=ned2
+# roslaunch niryo_robot_bringup desktop_gazebo_simulation.launch hardware_version:=ned2 simu_gripper:=true gripper_n_camera:=true use_sim_time:=false
+
+# Use ROS Melodic base image (Ubuntu 18.04)
+FROM osrf/ros:noetic-desktop-full
+
+# Set environment variables
+ENV DEBIAN_FRONTEND=noninteractive
+ENV ROS_DISTRO=noetic
+
+RUN mkdir -p /catkin_ws/src
+WORKDIR /catkin_ws
+
+# Copy the local ned_ros repository into the container
+COPY git_ned_ros /catkin_ws/src
+
+# Install Required Packages
+
+# Install required Python 3 and ROS-related packages
+RUN apt-get update && apt-get install -y \
+    python3-catkin-pkg \
+    python3-pymodbus \
+    python3-rosdistro \
+    python3-rospkg \
+    python3-rosinstall \
+    python3-rosinstall-generator \
+    python3-wstool \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Noetic-specific packages
+RUN apt-get update && apt-get install -y \
+    ros-noetic-moveit \
+    ros-noetic-control-msgs \
+    ros-noetic-controller-interface \
+    ros-noetic-tf2-web-republisher \
+    ros-noetic-rosbridge-server \
+    ros-noetic-joint-state-publisher-gui \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN apt-get update && apt-get install -y \
+    ros-noetic-ros-control \
+    ros-noetic-ros-controllers \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN apt-get update && apt-get install -y \
+    python3-pip \
+    build-essential \
+    sqlite3 \
+    python3-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN pip3 install --no-cache-dir rpi-ws281x gtts
+
+RUN apt-get update && apt-get install -y \
+    netcat \
+    && rm -rf /var/lib/apt/lists/*
+
+# Build the workspace
+WORKDIR /catkin_ws
+RUN /bin/bash -c "source /opt/ros/noetic/setup.bash && catkin_make"
+
+# Expose ROS ports for communication with other containers
+EXPOSE 11311

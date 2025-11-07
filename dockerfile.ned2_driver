@@ -1,0 +1,132 @@
+# Order of ROS2 Workspace Underlayments:
+# 1) /opt/ros/jazzy (includes MoveIt Python bindings)
+# 2) ~/ws_moveit/install (for MTC tutorials and demos)
+# 3) ~/ros2_drivers_ws/install
+# 4) ~/ws_pick/install (from a volume, built once container is running)
+
+# docker build -t ned2_driver_image -f dockerfile.ned2_driver .
+# docker run -it --rm --name ned2_driver --network ros_net -e DISPLAY=host.docker.internal:0.0 -v ${PWD}/v_ned2_moveit2:/scripts ned2_driver_image
+# docker-compose up -d
+# docker exec -it ned2_driver bash
+# source ~/ros2_driver_venv/bin/activate
+# source ~/ws_moveit/install/setup.bash
+# source ~/ros2_drivers_ws/install/setup.bash
+# ros2 launch niryo_ned_ros2_driver driver.launch.py drivers_list_file:=/scripts/drivers_list_sim.yaml use_sim_time:=true
+# ros2 launch niryo_ned2_moveit_config ned2_moveit_launch.py use_sim_time:=true
+# ros2 launch /scripts/sim/ned2_moveit_custom.launch.py
+
+# For running RViz when the ros2_driver is already running:
+    # ros2 launch niryo_ned2_moveit_config ned2_moveit_launch.py drivers_list_file:=/scripts/drivers_list_sim.yaml use_sim_time:=true
+
+# Need the ROS2 "Ros1-bridge" library to get /clock from ROS1 Gazebo simulation
+
+## IMPORTANT DIAGNOSTICS
+# ros2 node info /move_group
+
+## Reset Time In Windows
+# $now = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+# ssh niryo@10.10.10.10 "echo robotics | sudo -S date -s '$now'"
+## Increment time from inside the SSH
+# sudo date -s "$(date -d '+7 second'+'%Y-%m-%d %H:%M:%S')"
+
+## SSH and Test Date
+# ssh niryo@10.10.10.10      robotics
+# sudo service niryo_robot_ros stop     OR start
+
+# Step 1: define the target position and orientation
+# position="{x: 0.4, y: 0.0, z: 0.2}"
+# orientation="{x: -.5, y: .4, z: 0.3, w: 0.7}"
+# goal="{request: {workspace_parameters: {}, start_state: {}, goal_constraints: [{position_constraints: [{header: {frame_id: 'base_link'}, link_name: 'TCP', constraint_region: {primitive_poses: [{position: $position, orientation: $orientation}], primitives: [{type: 1, dimensions: [0.01, 0.01, 0.01]}]}, weight: 1.0}], orientation_constraints: [{header: {frame_id: 'base_link'}, link_name: 'tool_link', orientation: $orientation, absolute_x_axis_tolerance: 0.01, absolute_y_axis_tolerance: 0.01, absolute_z_axis_tolerance: 0.01, weight: 1.0}]}], group_name: 'arm', allowed_planning_time: 5.0}}"
+# ros2 action send_goal /move_action moveit_msgs/action/MoveGroup "$goal"
+
+FROM moveit/moveit2:main-jazzy-tutorial-source
+
+# Install tools, visualization and Python dependencies
+RUN apt-get update && apt-get install -y \
+    python3 python3-pip python3-venv \
+    python3-colcon-common-extensions \
+    git \
+    wget
+
+# Build the MoveIt2 packages, including tutorials, included in the base image
+# https://moveit.picknik.ai/main/doc/tutorials/getting_started/getting_started.html
+RUN /bin/bash -c "cd ~/ws_moveit && \
+    source /opt/ros/jazzy/setup.bash && \
+    colcon build --mixin release --cmake-args -DBUILD_PYTHON_BINDINGS=ON"
+
+# Build Niryo ROS2 Driver, Which include Description and URDF
+# https://github.com/NiryoRobotics/ned-ros2-driver
+RUN git config --global credential.helper "" && \
+    /bin/bash -c "mkdir -p ~/ros2_drivers_ws/src && \
+    cd ~/ros2_drivers_ws/src && \
+    git clone https://github.com/NiryoRobotics/ned-ros2-driver.git && \
+    cd ~/ros2_drivers_ws && \
+    rosdep install --from-paths src --ignore-src -r -y && \
+    pip install --break-system-packages -r src/ned-ros2-driver/requirements.txt && \
+    source ~/ws_moveit/install/setup.bash && \
+    colcon build"
+
+# Install Python packages globally to avoid virtual environment issues
+RUN pip3 install --break-system-packages roslibpy
+
+# Install ROS2 MoveIt Python API
+RUN apt-get update && apt-get install -y \
+    ros-jazzy-moveit-py \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Jupyter and other Python packages
+#RUN pip3 install jupyterlab pyniryo
+
+# Need netcat for debug, probably dont need gazebo-msgs, Added 10/29
+RUN apt-get update && apt-get install -y \
+    netcat-openbsd \
+    ros-jazzy-gazebo-msgs \
+    && rm -rf /var/lib/apt/lists/*
+
+# RQT For Visualization, Added 10/30
+RUN apt-get update && apt-get install -y \
+    ros-jazzy-rqt-graph \
+    ros-jazzy-rqt-tf-tree \
+    ros-jazzy-rqt-topic \
+    ros-jazzy-rqt-plot \
+    ros-jazzy-rqt-console
+
+RUN apt-get update && apt-get install -y \
+    ros-jazzy-ros-gz-interfaces \
+    ros-jazzy-ros-gz-bridge \
+    ros-jazzy-ros-gz-sim \
+    && rm -rf /var/lib/apt/lists/*
+
+VOLUME ./v_ned2_moveit2 /scripts
+
+# Create Virtual Python Environment For NED_ROS2_DRIVER, Added 11/4
+WORKDIR /scripts_temp
+COPY ./v_ned2_moveit2/ned2_python_venv_req.sh /scripts_temp/ned2_python_venv_req.sh
+RUN chmod +x /scripts_temp/ned2_python_venv_req.sh
+RUN /bin/bash -c "/scripts_temp/ned2_python_venv_req.sh"
+ENV VENV_PATH="/root/ros2_driver_venv"
+ENV PATH="${VENV_PATH}/bin:${PATH}"
+
+# Install mcmot, Multi-Camera Multi-Object Tracker, Added 11/6
+RUN /bin/bash -c "cd ~ && \
+    git clone https://github.com/stevenblum/mcmot.git && \
+    cd mcmot && \
+    pip install -e . \
+    "
+
+# Install stackws, ROS2 workspace with a node to stack tiles, Added 11/6
+RUN /bin/bash -c "cd ~ && \
+    source /opt/ros/jazzy/setup.bash && \
+    source ~/ws_moveit/install/setup.bash && \
+    source ~/ros2_driver_venv/bin/activate && \
+    git clone https://github.com/stevenblum/stackws.git && \
+    cd stackws && \
+    colcon build --mixin release --cmake-args -DBUILD_PYTHON_BINDINGS=ON \
+    "
+
+# Set up ROS environment
+SHELL ["/bin/bash", "-c"]
+RUN echo "source /opt/ros/jazzy/setup.bash" >> ~/.bashrc
+RUN echo "source ~/ws_moveit/install/setup.bash" >> ~/.bashrc
+RUN echo "source ~/ros2_drivers_ws/install/setup.bash" >> ~/.bashrc
+RUN echo "source ~/stackws/bin/activate" >> ~/.bashrc

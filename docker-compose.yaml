@@ -1,0 +1,49 @@
+version: "3.8"
+
+services:
+  ned2_driver:
+    image: ned2_driver_image  # Use pre-built image
+    container_name: ned2_driver
+    environment:
+      - DISPLAY=host.docker.internal:0.0  # Windows-specific display setting
+      - QT_X11_NO_MITSHM=1
+    volumes:
+      - ./ws_pick:/root/ws_pick  # Use absolute path in container
+      - ${PWD}/v_ned2_moveit2:/scripts
+      #- ./v_ned2_moveit2:/scripts  # Mount your scripts directory
+    # network_mode: host  # Remove - host mode doesn't work well on Windows Docker Desktop
+    privileged: true
+    stdin_open: true
+    tty: true
+    entrypoint: >
+      bash -c "
+        if [ -d /root/ws_pick ]; then
+          cd /root/ws_pick &&
+          source ~/ros2_drivers_ws/install/setup.bash &&
+          colcon build --mixin release &&
+          source /root/ws_pick/install/setup.bash;
+        fi &&
+        source ~/ros2_drivers_ws/install/setup.bash &&
+        exec bash"  # Keep container running with interactive bash
+
+
+  ned2_sim:
+    image: ned2_sim_image  # Use pre-built image
+    container_name: ned2_sim
+    environment:
+      - DISPLAY=host.docker.internal:0.0  # Windows-specific display setting
+      - QT_X11_NO_MITSHM=1
+    # network_mode: host  # Remove - host mode doesn't work well on Windows Docker Desktop
+    ports:
+      - "11311:11311"  # ROS master port
+    privileged: true
+    stdin_open: true
+    tty: true
+    entrypoint: >
+      bash -c "
+        source /opt/ros/noetic/setup.bash &&
+        source /catkin_ws/devel/setup.bash &&
+        roslaunch niryo_robot_bringup desktop_gazebo_simulation.launch \
+          hardware_version:=ned2 \
+          simu_gripper:=true \
+          gripper_n_camera:=true"

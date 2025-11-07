@@ -1,0 +1,9 @@
+/**:
+  ros__parameters:
+    topic_whitelist:
+      - "^(?!/gazebo).*"
+      - "^/clock$"
+    service_whitelist:
+      - ".*"
+    action_whitelist:
+      - ".*"
