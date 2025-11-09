@@ -1,13 +1,20 @@
 version: "3.8"
 
+networks:
+  ros_net:
+    name: ros_net         # Ensures it has a predictable name
+    driver: bridge        # Standard user-defined bridge network
+
 services:
   ned2_driver:
     image: ned2_driver_image  # Use pre-built image
     container_name: ned2_driver
     environment:
-      - DISPLAY=host.docker.internal:0.0  # Windows-specific display setting
-      - QT_X11_NO_MITSHM=1
+      - DISPLAY=$DISPLAY
+      #- DISPLAY=host.docker.internal:0.0  # Windows-specific display setting
+      #- QT_X11_NO_MITSHM=1
     volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
       - ./ws_pick:/root/ws_pick  # Use absolute path in container
       - ${PWD}/v_ned2_moveit2:/scripts
       #- ./v_ned2_moveit2:/scripts  # Mount your scripts directory
@@ -15,6 +22,8 @@ services:
     privileged: true
     stdin_open: true
     tty: true
+    networks:
+      - ros_net
     entrypoint: >
       bash -c "
         if [ -d /root/ws_pick ]; then
@@ -26,19 +35,24 @@ services:
         source ~/ros2_drivers_ws/install/setup.bash &&
         exec bash"  # Keep container running with interactive bash
 
-
   ned2_sim:
-    image: ned2_sim_image  # Use pre-built image
+    image: ned2_sim  # Use pre-built image
     container_name: ned2_sim
     environment:
-      - DISPLAY=host.docker.internal:0.0  # Windows-specific display setting
-      - QT_X11_NO_MITSHM=1
+      - DISPLAY=$DISPLAY
+      #- DISPLAY=host.docker.internal:0.0  # Windows-specific display setting
+      #- QT_X11_NO_MITSHM=1
     # network_mode: host  # Remove - host mode doesn't work well on Windows Docker Desktop
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix  # X11 socket for GUI forwarding
+      - ${PWD}/v_ned2_moveit2:/volume
     ports:
       - "11311:11311"  # ROS master port
     privileged: true
     stdin_open: true
     tty: true
+    networks:
+      - ros_net
     entrypoint: >
       bash -c "
         source /opt/ros/noetic/setup.bash &&
