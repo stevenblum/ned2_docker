@@ -5,7 +5,7 @@
 # 4) ~/ws_pick/install (from a volume, built once container is running)
 
 # docker build -t ned2_driver_image -f dockerfile.ned2_driver .
-# docker run -it --rm --name ned2_driver --network ros_net -e DISPLAY=host.docker.internal:0.0 -v ${PWD}/v_ned2_moveit2:/scripts ned2_driver_image
+# docker run -it --rm --name ned2_driver -e DISPLAY=host.docker.internal:0.0 -v ${PWD}/v_ned2_moveit2:/scripts ned2_driver_image
 # docker-compose up -d
 # docker exec -it ned2_driver bash
 # source ~/ros2_driver_venv/bin/activate
@@ -15,10 +15,8 @@
 # ros2 launch niryo_ned2_moveit_config ned2_moveit_launch.py use_sim_time:=true
 # ros2 launch /scripts/sim/ned2_moveit_custom.launch.py
 
-# For running RViz when the ros2_driver is already running:
-    # ros2 launch niryo_ned2_moveit_config ned2_moveit_launch.py drivers_list_file:=/scripts/drivers_list_sim.yaml use_sim_time:=true
-
-# Need the ROS2 "Ros1-bridge" library to get /clock from ROS1 Gazebo simulation
+# colcon build --packages-select ros2_stacks --symlink-install
+# ros2 launch ros2_stacks ros2_stacks.launch.py
 
 ## IMPORTANT DIAGNOSTICS
 # ros2 node info /move_group
@@ -95,6 +93,7 @@ RUN apt-get update && apt-get install -y \
     ros-jazzy-ros-gz-interfaces \
     ros-jazzy-ros-gz-bridge \
     ros-jazzy-ros-gz-sim \
+    tree \
     && rm -rf /var/lib/apt/lists/*
 
 VOLUME ./v_ned2_moveit2 /scripts
@@ -114,19 +113,31 @@ RUN /bin/bash -c "cd ~ && \
     pip install -e . \
     "
 
-# Install stackws, ROS2 workspace with a node to stack tiles, Added 11/6
-RUN /bin/bash -c "cd ~ && \
+# Install ros2_stacks, ROS2 workspace with a node to stack tiles, Added 11/6
+RUN /bin/bash -c "mkdir -p ~/stacks_ws/src && \
+    cd ~/stacks_ws/src && \
     source /opt/ros/jazzy/setup.bash && \
     source ~/ws_moveit/install/setup.bash && \
+    source ~/ros2_drivers_ws/install/setup.bash && \
     source ~/ros2_driver_venv/bin/activate && \
-    git clone https://github.com/stevenblum/stackws.git && \
-    cd stackws && \
-    colcon build --mixin release --cmake-args -DBUILD_PYTHON_BINDINGS=ON \
-    "
+    pip install catkin-pkg && \
+    git clone https://github.com/stevenblum/ros2_stacks.git && \
+    cd ~/stacks_ws && \
+    colcon build --packages-select ros2_stacks --symlink-install"
+
+
+RUN apt-get update && apt-get install -y \
+    nano
+    \
+    && rm -rf /var/lib/apt/lists/*
 
 # Set up ROS environment
 SHELL ["/bin/bash", "-c"]
 RUN echo "source /opt/ros/jazzy/setup.bash" >> ~/.bashrc
 RUN echo "source ~/ws_moveit/install/setup.bash" >> ~/.bashrc
 RUN echo "source ~/ros2_drivers_ws/install/setup.bash" >> ~/.bashrc
-RUN echo "source ~/stackws/bin/activate" >> ~/.bashrc
+RUN echo "source ~/stacks_ws/install/setup.bash" >> ~/.bashrc
+RUN echo "source ~/ros2_driver_venv/bin/activate" >> ~/.bashrc
+
+# Cython, ,empy
+# sudo apt-get install python3-catkin-pkg-modules/
