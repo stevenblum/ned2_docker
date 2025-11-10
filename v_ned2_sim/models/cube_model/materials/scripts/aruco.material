@@ -1,0 +1,6 @@
+material blank { technique { pass { texture_unit { texture blank.png } } } }
+material aruco_1 { technique { pass { texture_unit { texture aruco_1.png } } } }
+material aruco_2 { technique { pass { texture_unit { texture aruco_2.png } } } }
+material aruco_3 { technique { pass { texture_unit { texture aruco_3.png } } } }
+material aruco_4 { technique { pass { texture_unit { texture aruco_4.png } } } }
+material aruco_5 { technique { pass { texture_unit { texture aruco_5.png } } } }

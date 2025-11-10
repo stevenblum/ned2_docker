@@ -1,6 +1,7 @@
 git_ned_ros/
 archive/
 v_ned2_sim/aruco_cubes/materials/
+v_ned2_sim/materials
 
 
 *.log

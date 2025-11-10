@@ -116,10 +116,11 @@ def generate_launch_description():
         }.items(),
     )
 
-    clock_republisher = ExecuteProcess(
-        cmd=["python3", path_clock_republisher],
-        output="screen",
-    )
+    # DONT NEED CLOCK REPUBLISHER, BECUASE I HAVE THE ROSBRIDGE NODE PUBLISHING CLOCK
+    #clock_republisher = ExecuteProcess(
+    #    cmd=["python3", path_clock_republisher],
+    #    output="screen",
+    #)
 
     # -------------------------------------------------------------------------
     # Launch Description

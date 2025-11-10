@@ -60,6 +60,7 @@ services:
     image: ned2_driver_image  # Use pre-built image
     container_name: ned2_driver
     environment:
+      - GAZEBO_RESOURCE_PATH=/volume:${GAZEBO_RESOURCE_PATH} 
       - DISPLAY=$DISPLAY
       #- DISPLAY=host.docker.internal:0.0  # Windows-specific display setting
       #- QT_X11_NO_MITSHM=1

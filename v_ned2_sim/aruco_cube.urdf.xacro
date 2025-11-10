@@ -45,38 +45,38 @@
 
     <!-- Gazebo Classic: bind each face to a local OGRE material (no package needed) -->
     <gazebo reference="${name}_face_xp"><material><script>
-      <uri>file://${tex_root}/materials/scripts</uri>
-      <uri>file://${tex_root}/materials/textures</uri>
+      <uri>model://${tex_root}/materials/scripts</uri>
+      <uri>model://${tex_root}/materials/textures</uri>
       <name>aruco_${id1}</name>
     </script></material></gazebo>
 
     <gazebo reference="${name}_face_xm"><material><script>
-      <uri>file://${tex_root}/materials/scripts</uri>
-      <uri>file://${tex_root}/materials/textures</uri>
+      <uri>model://${tex_root}/materials/scripts</uri>
+      <uri>model://${tex_root}/materials/textures</uri>
       <name>aruco_${id2}</name>
     </script></material></gazebo>
 
     <gazebo reference="${name}_face_yp"><material><script>
-      <uri>file://${tex_root}/materials/scripts</uri>
-      <uri>file://${tex_root}/materials/textures</uri>
+      <uri>model://${tex_root}/materials/scripts</uri>
+      <uri>model://${tex_root}/materials/textures</uri>
       <name>aruco_${id3}</name>
     </script></material></gazebo>
 
     <gazebo reference="${name}_face_ym"><material><script>
-      <uri>file://${tex_root}/materials/scripts</uri>
-      <uri>file://${tex_root}/materials/textures</uri>
+      <uri>model://${tex_root}/materials/scripts</uri>
+      <uri>model://${tex_root}/materials/textures</uri>
       <name>aruco_${id4}</name>
     </script></material></gazebo>
 
     <gazebo reference="${name}_face_zp"><material><script>
-      <uri>file://${tex_root}/materials/scripts</uri>
-      <uri>file://${tex_root}/materials/textures</uri>
+      <uri>model://${tex_root}/materials/scripts</uri>
+      <uri>model://${tex_root}/materials/textures</uri>
       <name>aruco_${id5}</name>
     </script></material></gazebo>
 
     <gazebo reference="${name}_face_zm"><material><script>
-      <uri>file://${tex_root}/materials/scripts</uri>
-      <uri>file://${tex_root}/materials/textures</uri>
+      <uri>model://${tex_root}/materials/scripts</uri>
+      <uri>model://${tex_root}/materials/textures</uri>
       <name>${bottom_mat}</name>
     </script></material></gazebo>
 

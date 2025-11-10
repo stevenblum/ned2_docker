@@ -73,7 +73,7 @@ args = ap.parse_args()
 out = Path(args.out); out.mkdir(parents=True, exist_ok=True)
 aruco_dict = cv2.aruco.getPredefinedDictionary(DICTS[args.dict])
 for id_ in args.ids:
-  img = cv2.aruco.generateImageMarker(aruco_dict, id_, args.px, borderBits=1)
+  img = cv2.aruco.drawMarker(aruco_dict, id_, args.px, borderBits=1)
   cv2.imwrite(str(out / f"aruco_{id_}.png"), img)
 # blank helper
 blank = out / "blank.png"
@@ -102,6 +102,7 @@ fi
 
 # --- (re)generate minimal OGRE material entries for these IDs + blank ---
 touch "$MAT_FILE"
+URDF_TMP="" 
 tmp="$(mktemp)"; trap 'rm -f "$tmp" "$URDF_TMP"' EXIT
 # remove old definitions for current IDs and 'blank'
 awk -v ids="$(printf "%s " "${IDS[@]}")" '
@@ -144,6 +145,12 @@ material aruco_${id}
 EOF
 done
 
+# ... after the DIR="$(cd ...)" assignment
+MODEL_ROOT="$(dirname "$DIR")" # Parent directory of where the script lives
+
+# Export the parent directory to GAZEBO_MODEL_PATH for model:// URIs
+export GAZEBO_MODEL_PATH="${GAZEBO_MODEL_PATH:-}:$MODEL_ROOT"
+
 # --- wait for Gazebo service ---
 echo "[spawn] waiting for /gazebo/spawn_urdf_model ..."
 for i in $(seq 1 120); do
@@ -151,6 +158,7 @@ for i in $(seq 1 120); do
   sleep 1
   [[ $i -eq 120 ]] && { echo "Timeout waiting for Gazebo"; exit 1; }
 done
+
 
 # --- build URDF and spawn ---
 URDF_TMP="$(mktemp)"
@@ -165,14 +173,19 @@ if rosservice list | grep -q /gazebo/delete_model; then
 fi
 
 # yaw -> quaternion
-read -r QX QY QZ QW < <(python3 - <<PY
+read -r QX QY QZ QW < <(python3 - "$YAW" <<'PY'
 import math,sys
-yaw=float(sys.argv[1]); r=p=0.0
-cy,sy=math.cos(yaw*0.5),math.sin(yaw*0.5)
-qw=cy; qx=0.0; qy=0.0; qz=sy
-print(qx,qy,qz,qw)
+try:
+    yaw=float(sys.argv[1]); r=p=0.0
+    cy,sy=math.cos(yaw*0.5),math.sin(yaw*0.5)
+    qw=cy; qx=0.0; qy=0.0; qz=sy
+    print(qx,qy,qz,qw)
+except IndexError:
+    print("0.0 0.0 0.0 1.0") # Default to no rotation if arg missing/bad
+except ValueError:
+    print("0.0 0.0 0.0 1.0") # Handle if float conversion fails
 PY
-"$YAW")
+)
 
 echo "[spawn] spawning $NAME: IDs $START..$((START+4)) at ($X,$Y,$Z) yaw=$YAW"
 rosservice call /gazebo/spawn_urdf_model "model_name: '$NAME'

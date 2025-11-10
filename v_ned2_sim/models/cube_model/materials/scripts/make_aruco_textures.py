@@ -66,7 +66,7 @@ def main():
 
     # Generate each PNG
     for id_ in ids:
-        img = cv2.aruco.generateImageMarker(aruco_dict, id_, args.px, borderBits=args.border)
+        img = cv2.aruco.drawMarker(aruco_dict, id_, args.px, borderBits=args.border)
         out_path = out_dir / f"aruco_{id_}.png"
         ok = cv2.imwrite(str(out_path), img)
         if not ok:

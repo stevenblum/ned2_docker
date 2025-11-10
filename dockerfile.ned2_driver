@@ -96,11 +96,11 @@ RUN apt-get update && apt-get install -y \
     tree \
     && rm -rf /var/lib/apt/lists/*
 
-VOLUME ./v_ned2_moveit2 /scripts
+VOLUME ./v_ned2_driver /scripts
 
 # Create Virtual Python Environment For NED_ROS2_DRIVER, Added 11/4
 WORKDIR /scripts_temp
-COPY ./v_ned2_moveit2/ned2_python_venv_req.sh /scripts_temp/ned2_python_venv_req.sh
+COPY ./v_ned2_driver/ned2_python_venv_req.sh /scripts_temp/ned2_python_venv_req.sh
 RUN chmod +x /scripts_temp/ned2_python_venv_req.sh
 RUN /bin/bash -c "/scripts_temp/ned2_python_venv_req.sh"
 ENV VENV_PATH="/root/ros2_driver_venv"
