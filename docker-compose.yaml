@@ -6,6 +6,37 @@ networks:
     driver: bridge        # Standard user-defined bridge network
 
 services:
+  ned2_sim:
+    image: ned2_sim  # Use pre-built image
+    container_name: ned2_sim
+    environment:
+      - DISPLAY=$DISPLAY
+      #- DISPLAY=host.docker.internal:0.0  # Windows-specific display setting
+      #- QT_X11_NO_MITSHM=1
+    # network_mode: host  # Remove - host mode doesn't work well on Windows Docker Desktop
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix  # X11 socket for GUI forwarding
+      - $PWD/v_ned2_sim:/volume
+    ports:
+      - "11311:11311"  # ROS master port
+    privileged: true
+    stdin_open: true
+    tty: true
+    networks:
+      - ros_net
+    entrypoint:
+      - /bin/bash
+      - -lc
+      - |
+        set -e
+        source /opt/ros/noetic/setup.bash
+        source /catkin_ws/devel/setup.bash
+        roslaunch niryo_robot_bringup desktop_gazebo_simulation.launch \
+          hardware_version:=ned2 simu_gripper:=true gripper_n_camera:=true &
+        for i in {1..90}; do rosservice list | grep -q /gazebo/spawn_urdf_model && break; sleep 1; done
+        bash /volume/dual_cameras_spawn.sh
+        wait
+        
   ned2_driver:
     image: ned2_driver_image  # Use pre-built image
     container_name: ned2_driver
@@ -16,7 +47,7 @@ services:
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - ./ws_pick:/root/ws_pick  # Use absolute path in container
-      - ${PWD}/v_ned2_moveit2:/scripts
+      - $PWD/v_ned2_driver:/scripts
       #- ./v_ned2_moveit2:/scripts  # Mount your scripts directory
     # network_mode: host  # Remove - host mode doesn't work well on Windows Docker Desktop
     privileged: true
@@ -33,31 +64,9 @@ services:
           source /root/ws_pick/install/setup.bash;
         fi &&
         source ~/ros2_drivers_ws/install/setup.bash &&
-        exec bash"  # Keep container running with interactive bash
-
-  ned2_sim:
-    image: ned2_sim  # Use pre-built image
-    container_name: ned2_sim
-    environment:
-      - DISPLAY=$DISPLAY
-      #- DISPLAY=host.docker.internal:0.0  # Windows-specific display setting
-      #- QT_X11_NO_MITSHM=1
-    # network_mode: host  # Remove - host mode doesn't work well on Windows Docker Desktop
-    volumes:
-      - /tmp/.X11-unix:/tmp/.X11-unix  # X11 socket for GUI forwarding
-      - ${PWD}/v_ned2_moveit2:/volume
-    ports:
-      - "11311:11311"  # ROS master port
-    privileged: true
-    stdin_open: true
-    tty: true
-    networks:
-      - ros_net
-    entrypoint: >
-      bash -c "
-        source /opt/ros/noetic/setup.bash &&
-        source /catkin_ws/devel/setup.bash &&
-        roslaunch niryo_robot_bringup desktop_gazebo_simulation.launch \
-          hardware_version:=ned2 \
-          simu_gripper:=true \
-          gripper_n_camera:=true"
+        python3 /scripts/sim/rosbridge_image_forwarder.py \
+          --rb-host ned2_sim \
+          --rb-port 9090 \
+          --use-sim-time &
+        apt-get update && apt-get install -y ros-jazzy-rqt-image-view &&
+        ros2 launch /scripts/sim/ned2_moveit_custom.launch.py"  # Keep container running with interactive bash

@@ -11,7 +11,7 @@
 # source ~/ros2_driver_venv/bin/activate
 # source ~/ws_moveit/install/setup.bash
 # source ~/ros2_drivers_ws/install/setup.bash
-# ros2 launch niryo_ned_ros2_driver driver.launch.py drivers_list_file:=/scripts/drivers_list_sim.yaml use_sim_time:=true
+# ros2 launch niryo_ned_ros2_driver driver.launch.py drivers_list_file:=/scripts/sim/drivers_list_sim.yaml use_sim_time:=true
 # ros2 launch niryo_ned2_moveit_config ned2_moveit_launch.py use_sim_time:=true
 # ros2 launch /scripts/sim/ned2_moveit_custom.launch.py
 
@@ -125,10 +125,10 @@ RUN /bin/bash -c "mkdir -p ~/stacks_ws/src && \
     cd ~/stacks_ws && \
     colcon build --packages-select ros2_stacks --symlink-install"
 
-
+# rqt image-view add, 11/9
 RUN apt-get update && apt-get install -y \
-    nano
-    \
+    nano \
+    ros-jazzy-rqt-image-view \
     && rm -rf /var/lib/apt/lists/*
 
 # Set up ROS environment
