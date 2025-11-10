@@ -31,12 +31,31 @@ services:
         set -e
         source /opt/ros/noetic/setup.bash
         source /catkin_ws/devel/setup.bash
+
+        # Launch Gazebo/Niryo sim
         roslaunch niryo_robot_bringup desktop_gazebo_simulation.launch \
           hardware_version:=ned2 simu_gripper:=true gripper_n_camera:=true &
-        for i in {1..90}; do rosservice list | grep -q /gazebo/spawn_urdf_model && break; sleep 1; done
+
+        # Wait for Gazebo spawn service
+        for i in {1..120}; do rosservice list | grep -q /gazebo/spawn_urdf_model && break; sleep 1; done
+
+        # Ensure scripts are executable
+        chmod +x /volume/dual_cameras_spawn.sh || true
+        chmod +x /volume/spawn_aruco_cube.sh || true
+
+        # Spawn the dual cameras
         bash /volume/dual_cameras_spawn.sh
+
+        # Spawn four cubes: start_id = 1, 6, 11, 16
+        #  NAME     START  X      Y       Z     YAW
+        bash /volume/spawn_aruco_cube.sh cube1   1   0.15   0.15   0.05   0
+        bash /volume/spawn_aruco_cube.sh cube2   6   0.15  -0.15   0.05   0
+        bash /volume/spawn_aruco_cube.sh cube3  11   0.25   0.15   0.05   0
+        bash /volume/spawn_aruco_cube.sh cube4  16   0.25  -0.15   0.05   0
+
+        # Keep container in foreground
         wait
-        
+      
   ned2_driver:
     image: ned2_driver_image  # Use pre-built image
     container_name: ned2_driver

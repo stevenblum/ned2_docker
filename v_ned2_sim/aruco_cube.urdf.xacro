@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="aruco_cubes">
+
+  <!-- Parametric ArUco cube (5 cm default) -->
+  <xacro:macro name="aruco_cube" params="name start_id size:=0.05 decal_t:=0.0004 tex_root:='.' bottom_mat:='blank' mass:=0.05">
+    <xacro:property name="h" value="${size/2.0}"/>
+    <xacro:property name="t" value="${decal_t}"/>
+    <xacro:property name="id1" value="${start_id}"/>
+    <xacro:property name="id2" value="${start_id+1}"/>
+    <xacro:property name="id3" value="${start_id+2}"/>
+    <xacro:property name="id4" value="${start_id+3}"/>
+    <xacro:property name="id5" value="${start_id+4}"/>
+
+    <link name="${name}">
+      <!-- Inertial (uniform cube) -->
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="${mass}"/>
+        <inertia ixx="${mass*size*size/6.0}" ixy="0" ixz="0"
+                 iyy="${mass*size*size/6.0}" iyz="0"
+                 izz="${mass*size*size/6.0}"/>
+      </inertial>
+
+      <!-- Single collision shape -->
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry><box size="${size} ${size} ${size}"/></geometry>
+      </collision>
+
+      <!-- Plain body visual -->
+      <visual name="${name}_body">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry><box size="${size} ${size} ${size}"/></geometry>
+        <material name="${name}_body_mat"><color rgba="0.95 0.95 0.95 1"/></material>
+      </visual>
+
+      <!-- Six ultra-thin “decal” visuals (so each face can have its own texture) -->
+      <visual name="${name}_face_xp"><origin xyz="${h + t/2} 0 0" rpy="0 0 0"/><geometry><box size="${t} ${size} ${size}"/></geometry></visual>
+      <visual name="${name}_face_xm"><origin xyz="${-h - t/2} 0 0" rpy="0 0 0"/><geometry><box size="${t} ${size} ${size}"/></geometry></visual>
+      <visual name="${name}_face_yp"><origin xyz="0 ${h + t/2} 0" rpy="0 0 0"/><geometry><box size="${size} ${t} ${size}"/></geometry></visual>
+      <visual name="${name}_face_ym"><origin xyz="0 ${-h - t/2} 0" rpy="0 0 0"/><geometry><box size="${size} ${t} ${size}"/></geometry></visual>
+      <visual name="${name}_face_zp"><origin xyz="0 0 ${h + t/2}" rpy="0 0 0"/><geometry><box size="${size} ${size} ${t}"/></geometry></visual>
+      <visual name="${name}_face_zm"><origin xyz="0 0 ${-h - t/2}" rpy="0 0 0"/><geometry><box size="${size} ${size} ${t}"/></geometry></visual>
+    </link>
+
+    <!-- Gazebo Classic: bind each face to a local OGRE material (no package needed) -->
+    <gazebo reference="${name}_face_xp"><material><script>
+      <uri>file://${tex_root}/materials/scripts</uri>
+      <uri>file://${tex_root}/materials/textures</uri>
+      <name>aruco_${id1}</name>
+    </script></material></gazebo>
+
+    <gazebo reference="${name}_face_xm"><material><script>
+      <uri>file://${tex_root}/materials/scripts</uri>
+      <uri>file://${tex_root}/materials/textures</uri>
+      <name>aruco_${id2}</name>
+    </script></material></gazebo>
+
+    <gazebo reference="${name}_face_yp"><material><script>
+      <uri>file://${tex_root}/materials/scripts</uri>
+      <uri>file://${tex_root}/materials/textures</uri>
+      <name>aruco_${id3}</name>
+    </script></material></gazebo>
+
+    <gazebo reference="${name}_face_ym"><material><script>
+      <uri>file://${tex_root}/materials/scripts</uri>
+      <uri>file://${tex_root}/materials/textures</uri>
+      <name>aruco_${id4}</name>
+    </script></material></gazebo>
+
+    <gazebo reference="${name}_face_zp"><material><script>
+      <uri>file://${tex_root}/materials/scripts</uri>
+      <uri>file://${tex_root}/materials/textures</uri>
+      <name>aruco_${id5}</name>
+    </script></material></gazebo>
+
+    <gazebo reference="${name}_face_zm"><material><script>
+      <uri>file://${tex_root}/materials/scripts</uri>
+      <uri>file://${tex_root}/materials/textures</uri>
+      <name>${bottom_mat}</name>
+    </script></material></gazebo>
+
+    <gazebo reference="${name}">
+      <selfCollide>false</selfCollide>
+      <mu1>0.8</mu1><mu2>0.8</mu2><kp>1e6</kp><kd>1</kd>
+    </gazebo>
+  </xacro:macro>
+
+  <!-- Make this file directly instantiable from CLI -->
+  <xacro:arg name="name" default="aruco_cube"/>
+  <xacro:arg name="start_id" default="1"/>
+  <xacro:arg name="size" default="0.05"/>
+  <xacro:arg name="decal_t" default="0.0004"/>
+  <xacro:arg name="tex_root" default="."/>
+  <xacro:arg name="bottom_mat" default="blank"/>
+
+  <xacro:aruco_cube name="$(arg name)" start_id="$(arg start_id)" size="$(arg size)"
+                    decal_t="$(arg decal_t)" tex_root="$(arg tex_root)" bottom_mat="$(arg bottom_mat)"/>
+</robot>
