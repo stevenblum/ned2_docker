@@ -44,100 +44,90 @@ RUN apt-get update && apt-get install -y \
     python3 python3-pip python3-venv \
     python3-colcon-common-extensions \
     git \
-    wget
+    wget \
+    tree \
+    netcat-openbsd \
+    nano \
+    ros-jazzy-moveit-py \
+    ros-jazzy-rqt-graph \
+    ros-jazzy-rqt-tf-tree \
+    ros-jazzy-rqt-topic \
+    ros-jazzy-rqt-plot \
+    ros-jazzy-rqt-image-view \
+    ros-jazzy-rqt-console \
+    ros-jazzy-ros-gz-interfaces \
+    ros-jazzy-ros-gz-bridge \
+    ros-jazzy-ros-gz-sim \
+    ros-jazzy-gazebo-msgs \
+    ros-jazzy-theora-image-transport \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create Virtual Python Environment For NED_ROS2_DRIVER, Added 11/4
+#WORKDIR /scripts_temp
+#COPY ./v_ned2_driver/ned2_python_venv_req.sh /scripts_temp/ned2_python_venv_req.sh
+#RUN chmod +x /scripts_temp/ned2_python_venv_req.sh
+#RUN /bin/bash -c "/scripts_temp/ned2_python_venv_req.sh"
+#ENV VENV_PATH="~/python_venv"
+#ENV PATH="${VENV_PATH}/bin:${PATH}"
+
+RUN pip install --break-system-packages \
+    pandas \
+    matplotlib \
+    catkin-pkg \
+    pyyaml \
+    roslibpy==1.6.0 \
+    jinja2 \
+    typeguard \
+    ultralytics \
+    supervision \
+    opencv-python \
+    empy \
+    lark \
+    pyparsing \
+    setuptools \
+    wheel \
+    colcon-common-extensions
 
 # Build the MoveIt2 packages, including tutorials, included in the base image
 # https://moveit.picknik.ai/main/doc/tutorials/getting_started/getting_started.html
 RUN /bin/bash -c "cd ~/ws_moveit && \
     source /opt/ros/jazzy/setup.bash && \
+    source ~/python_venv/bin/activate && \
     colcon build --mixin release --cmake-args -DBUILD_PYTHON_BINDINGS=ON"
 
 # Build Niryo ROS2 Driver, Which include Description and URDF
 # https://github.com/NiryoRobotics/ned-ros2-driver
 RUN git config --global credential.helper "" && \
-    /bin/bash -c "mkdir -p ~/ros2_drivers_ws/src && \
-    cd ~/ros2_drivers_ws/src && \
+    /bin/bash -c "mkdir -p ~/ws_ros2_drivers/src && \
+    cd ~/ws_ros2_drivers/src && \
     git clone https://github.com/NiryoRobotics/ned-ros2-driver.git && \
-    cd ~/ros2_drivers_ws && \
-    rosdep install --from-paths src --ignore-src -r -y && \
-    pip install --break-system-packages -r src/ned-ros2-driver/requirements.txt && \
+    cd ~/ws_ros2_drivers && \
     source ~/ws_moveit/install/setup.bash && \
+    rosdep install --from-paths src --ignore-src -r -y && \
+    pip install -r src/ned-ros2-driver/requirements.txt && \
     colcon build"
 
-# Install Python packages globally to avoid virtual environment issues
-RUN pip3 install --break-system-packages roslibpy
-
-# Install ROS2 MoveIt Python API
-RUN apt-get update && apt-get install -y \
-    ros-jazzy-moveit-py \
-    && rm -rf /var/lib/apt/lists/*
-
-# Install Jupyter and other Python packages
-#RUN pip3 install jupyterlab pyniryo
-
-# Need netcat for debug, probably dont need gazebo-msgs, Added 10/29
-RUN apt-get update && apt-get install -y \
-    netcat-openbsd \
-    ros-jazzy-gazebo-msgs \
-    && rm -rf /var/lib/apt/lists/*
-
-# RQT For Visualization, Added 10/30
-RUN apt-get update && apt-get install -y \
-    ros-jazzy-rqt-graph \
-    ros-jazzy-rqt-tf-tree \
-    ros-jazzy-rqt-topic \
-    ros-jazzy-rqt-plot \
-    ros-jazzy-rqt-console
-
-RUN apt-get update && apt-get install -y \
-    ros-jazzy-ros-gz-interfaces \
-    ros-jazzy-ros-gz-bridge \
-    ros-jazzy-ros-gz-sim \
-    tree \
-    && rm -rf /var/lib/apt/lists/*
-
-VOLUME ./v_ned2_driver /scripts
-
-# Create Virtual Python Environment For NED_ROS2_DRIVER, Added 11/4
-WORKDIR /scripts_temp
-COPY ./v_ned2_driver/ned2_python_venv_req.sh /scripts_temp/ned2_python_venv_req.sh
-RUN chmod +x /scripts_temp/ned2_python_venv_req.sh
-RUN /bin/bash -c "/scripts_temp/ned2_python_venv_req.sh"
-ENV VENV_PATH="/root/ros2_driver_venv"
-ENV PATH="${VENV_PATH}/bin:${PATH}"
+VOLUME ./v_ned2_driver /volume
 
 # Install mcmot, Multi-Camera Multi-Object Tracker, Added 11/6
 RUN /bin/bash -c "cd ~ && \
     git clone https://github.com/stevenblum/mcmot.git && \
-    cd mcmot && \
-    pip install -e . \
-    "
+    cd ~/mcmot && \
+    pip install -e ."
 
 # Install ros2_stacks, ROS2 workspace with a node to stack tiles, Added 11/6
-RUN /bin/bash -c "mkdir -p ~/stacks_ws/src && \
-    cd ~/stacks_ws/src && \
+RUN /bin/bash -c "mkdir -p ~/ws_stacks/src && \
+    cd ~/ws_stacks/src && \
+    git clone https://github.com/stevenblum/ros2_stacks.git && \
+    cd ~/ws_stacks && \
     source /opt/ros/jazzy/setup.bash && \
     source ~/ws_moveit/install/setup.bash && \
-    source ~/ros2_drivers_ws/install/setup.bash && \
-    source ~/ros2_driver_venv/bin/activate && \
-    pip install catkin-pkg && \
-    git clone https://github.com/stevenblum/ros2_stacks.git && \
-    cd ~/stacks_ws && \
+    source ~/ws_ros2_drivers/install/setup.bash && \
     colcon build --packages-select ros2_stacks --symlink-install"
-
-# rqt image-view add, 11/9
-RUN apt-get update && apt-get install -y \
-    nano \
-    ros-jazzy-rqt-image-view \
-    && rm -rf /var/lib/apt/lists/*
 
 # Set up ROS environment
 SHELL ["/bin/bash", "-c"]
 RUN echo "source /opt/ros/jazzy/setup.bash" >> ~/.bashrc
 RUN echo "source ~/ws_moveit/install/setup.bash" >> ~/.bashrc
-RUN echo "source ~/ros2_drivers_ws/install/setup.bash" >> ~/.bashrc
-RUN echo "source ~/stacks_ws/install/setup.bash" >> ~/.bashrc
-RUN echo "source ~/ros2_driver_venv/bin/activate" >> ~/.bashrc
-
-# Cython, ,empy
-# sudo apt-get install python3-catkin-pkg-modules/
+RUN echo "source ~/ws_ros2_drivers/install/setup.bash" >> ~/.bashrc
+RUN echo "source ~/ws_stacks/install/setup.bash" >> ~/.bashrc

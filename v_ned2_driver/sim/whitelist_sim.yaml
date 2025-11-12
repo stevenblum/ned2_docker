@@ -1,7 +1,7 @@
 /**:
   ros__parameters:
     topic_whitelist:
-      - ".*"
+      - "^(?!.*/camera_info$).*" 
     service_whitelist:
       - ".*"
     action_whitelist:

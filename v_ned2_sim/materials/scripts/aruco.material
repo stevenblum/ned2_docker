@@ -1,0 +1,71 @@
+material blank { technique { pass { lighting off ambient 1 1 1 1 diffuse 1 1 1 1 specular 0 0 0 1 0 } } }
+material aruco_16
+{
+  technique
+  {
+    pass
+    {
+      lighting off
+      ambient 1 1 1 1
+      diffuse 1 1 1 1
+      specular 0 0 0 1 0
+      texture_unit { texture aruco_16.png }
+    }
+  }
+}
+material aruco_17
+{
+  technique
+  {
+    pass
+    {
+      lighting off
+      ambient 1 1 1 1
+      diffuse 1 1 1 1
+      specular 0 0 0 1 0
+      texture_unit { texture aruco_17.png }
+    }
+  }
+}
+material aruco_18
+{
+  technique
+  {
+    pass
+    {
+      lighting off
+      ambient 1 1 1 1
+      diffuse 1 1 1 1
+      specular 0 0 0 1 0
+      texture_unit { texture aruco_18.png }
+    }
+  }
+}
+material aruco_19
+{
+  technique
+  {
+    pass
+    {
+      lighting off
+      ambient 1 1 1 1
+      diffuse 1 1 1 1
+      specular 0 0 0 1 0
+      texture_unit { texture aruco_19.png }
+    }
+  }
+}
+material aruco_20
+{
+  technique
+  {
+    pass
+    {
+      lighting off
+      ambient 1 1 1 1
+      diffuse 1 1 1 1
+      specular 0 0 0 1 0
+      texture_unit { texture aruco_20.png }
+    }
+  }
+}

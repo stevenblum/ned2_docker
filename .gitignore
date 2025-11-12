@@ -1,8 +1,9 @@
 git_ned_ros/
-archive/
-v_ned2_sim/aruco_cubes/materials/
-v_ned2_sim/materials
-
+Archive/
+v_ned2_sim/models/materials/*
+mcmot/
+ros2_stacks/
+*aruco_*.png
 
 *.log
 *.tmp

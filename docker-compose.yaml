@@ -6,6 +6,39 @@ networks:
     driver: bridge        # Standard user-defined bridge network
 
 services:
+  ned2_driver:
+    image: ned2_driver_image  # Use pre-built image
+    container_name: ned2_driver
+    environment:
+      - GAZEBO_RESOURCE_PATH=/volume:${GAZEBO_RESOURCE_PATH} 
+      - DISPLAY=$DISPLAY
+      #- DISPLAY=host.docker.internal:0.0  # Windows-specific display setting
+      #- QT_X11_NO_MITSHM=1
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - ./ws_pick:/root/ws_pick  # Use absolute path in container
+      - $PWD/v_ned2_driver:/scripts
+      #- ./v_ned2_moveit2:/scripts  # Mount your scripts directory
+    # network_mode: host  # Remove - host mode doesn't work well on Windows Docker Desktop
+    privileged: true
+    stdin_open: true
+    tty: true
+    networks:
+      - ros_net
+    entrypoint:
+      - /bin/bash
+      - -c
+      - |
+        set -e
+        source /opt/ros/jazzy/setup.bash
+        source ~/ws_moveit/install/setup.bash
+        source ~/ws_ros2_drivers/install/setup.bash
+        source ~/python_venv/bin/activate
+        python3 /scripts/sim/rosbridge_image_forwarder.py --rb-host ned2_sim --rb-port 9090 --use-sim-time &
+        sleep 10
+        ros2 launch /scripts/sim/ned2_moveit_custom.launch.py || echo "Launch failed"
+        bash # Keep container alive
+
   ned2_sim:
     image: ned2_sim  # Use pre-built image
     container_name: ned2_sim
@@ -32,10 +65,17 @@ services:
         source /opt/ros/noetic/setup.bash
         source /catkin_ws/devel/setup.bash
 
+        # Find and fix the gripper orientation
+        find /catkin_ws/src -name "niryo_ned2_gripper1_n_camera.urdf.xacro" -exec sed -i 's/rpy="$${-PI\/2} 0 0"/rpy="0 $${PI\/2} $${PI\/2}"/g' {} \;
+        cd /catkin_ws
+        catkin_make
+        source /catkin_ws/devel/setup.bash
+
         # Launch Gazebo/Niryo sim
         roslaunch niryo_robot_bringup desktop_gazebo_simulation.launch \
-          hardware_version:=ned2 simu_gripper:=true gripper_n_camera:=true &
-
+        hardware_version:=ned2 simu_gripper:=true simulation_mode:=true \
+        gripper_n_camera:=true &
+        
         # Wait for Gazebo spawn service
         for i in {1..120}; do rosservice list | grep -q /gazebo/spawn_urdf_model && break; sleep 1; done
 
@@ -48,45 +88,11 @@ services:
 
         # Spawn four cubes: start_id = 1, 6, 11, 16
         #  NAME     START  X      Y       Z     YAW
-        bash /volume/spawn_aruco_cube.sh cube1   1   0.15   0.15   0.05   0
-        bash /volume/spawn_aruco_cube.sh cube2   6   0.15  -0.15   0.05   0
-        bash /volume/spawn_aruco_cube.sh cube3  11   0.25   0.15   0.05   0
-        bash /volume/spawn_aruco_cube.sh cube4  16   0.25  -0.15   0.05   0
+        bash /volume/spawn_aruco_sdf.sh 1   0.15  0.15  0.025
+        bash /volume/spawn_aruco_sdf.sh 2   0.15  -0.15  0.05
+        bash /volume/spawn_aruco_sdf.sh 3   0.4   0.15   0.05
+        bash /volume/spawn_aruco_sdf.sh 4   0.4  -0.15   0.05
 
         # Keep container in foreground
         wait
       
-  ned2_driver:
-    image: ned2_driver_image  # Use pre-built image
-    container_name: ned2_driver
-    environment:
-      - GAZEBO_RESOURCE_PATH=/volume:${GAZEBO_RESOURCE_PATH} 
-      - DISPLAY=$DISPLAY
-      #- DISPLAY=host.docker.internal:0.0  # Windows-specific display setting
-      #- QT_X11_NO_MITSHM=1
-    volumes:
-      - /tmp/.X11-unix:/tmp/.X11-unix
-      - ./ws_pick:/root/ws_pick  # Use absolute path in container
-      - $PWD/v_ned2_driver:/scripts
-      #- ./v_ned2_moveit2:/scripts  # Mount your scripts directory
-    # network_mode: host  # Remove - host mode doesn't work well on Windows Docker Desktop
-    privileged: true
-    stdin_open: true
-    tty: true
-    networks:
-      - ros_net
-    entrypoint: >
-      bash -c "
-        if [ -d /root/ws_pick ]; then
-          cd /root/ws_pick &&
-          source ~/ros2_drivers_ws/install/setup.bash &&
-          colcon build --mixin release &&
-          source /root/ws_pick/install/setup.bash;
-        fi &&
-        source ~/ros2_drivers_ws/install/setup.bash &&
-        python3 /scripts/sim/rosbridge_image_forwarder.py \
-          --rb-host ned2_sim \
-          --rb-port 9090 \
-          --use-sim-time &
-        apt-get update && apt-get install -y ros-jazzy-rqt-image-view &&
-        ros2 launch /scripts/sim/ned2_moveit_custom.launch.py"  # Keep container running with interactive bash

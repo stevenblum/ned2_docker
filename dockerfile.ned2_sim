@@ -66,6 +66,7 @@ RUN pip3 install --no-cache-dir rpi-ws281x gtts
 
 RUN apt-get update && apt-get install -y \
     netcat \
+    tree \
     && rm -rf /var/lib/apt/lists/*
 
 # Build the workspace

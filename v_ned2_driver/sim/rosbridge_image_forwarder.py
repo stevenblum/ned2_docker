@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+## python3 /scripts/sim/rosbridge_image_forwarder.py --rb-host ned2_sim --rb-port 9090 --use-sim-time
+
 import base64
 import threading
 import time

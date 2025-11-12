@@ -74,7 +74,7 @@ def generate_launch_description():
         output="screen",
         parameters=[
             moveit_config.to_dict(),
-            {"use_sim_time": LaunchConfiguration("use_sim_time")},
+            {"use_sim_time": True},
             {"collision_detection": {"allow_self_collision": False}},
         ],
         arguments=["--ros-args", "--log-level", "info"],
@@ -101,7 +101,7 @@ def generate_launch_description():
             moveit_config.planning_pipelines,
             moveit_config.robot_description_kinematics,
             moveit_config.joint_limits,
-            {"use_sim_time": LaunchConfiguration("use_sim_time")},
+            {"use_sim_time": True},
         ],
     )
 
@@ -116,20 +116,46 @@ def generate_launch_description():
         }.items(),
     )
 
-    # DONT NEED CLOCK REPUBLISHER, BECUASE I HAVE THE ROSBRIDGE NODE PUBLISHING CLOCK
-    #clock_republisher = ExecuteProcess(
-    #    cmd=["python3", path_clock_republisher],
-    #    output="screen",
-    #)
+    ros2_driver_delayed = TimerAction(
+        period=8.0,  # Wait for rosbridge and simulation to be ready
+        actions=[ros2_driver_launch]
+    )
+
+    #DONT NEED CLOCK REPUBLISHER, BECUASE I HAVE THE ROSBRIDGE NODE PUBLISHING CLOCK
+    clock_republisher = ExecuteProcess(
+        cmd=["python3", path_clock_republisher],
+        output="screen",
+    )
+
+        # -------------------------------------------------------------------------
+    # ROS2 Stacks Node
+    # -------------------------------------------------------------------------
+    ros2_stacks_node = Node(
+        package="ros2_stacks",  # Replace with your actual package name
+        executable="ros2_stacks",  # Replace with your node's executable
+        name="ros2_stacks",
+        output="screen",
+        parameters=[
+            {"use_sim_time": True},
+            # Add any other parameters your node needs
+        ],
+    )
+
+    ros2_stacks_delayed = TimerAction(
+        period=20.0,  # Start after driver is ready
+        actions=[ros2_stacks_node]
+    )
+
 
     # -------------------------------------------------------------------------
     # Launch Description
     # -------------------------------------------------------------------------
     return LaunchDescription([
-        ros2_driver_launch,
-        clock_republisher,
         rviz_config_arg,
         use_sim_time_arg,
+        #clock_republisher,
         rviz_node,
+        ros2_driver_delayed,
         move_group_delayed,
+        #ros2_stacks_delayed,
     ])

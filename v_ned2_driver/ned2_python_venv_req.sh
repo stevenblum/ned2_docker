@@ -2,7 +2,7 @@
 set -e
 
 # === Configuration ===
-VENV_PATH="/root/ros2_driver_venv"
+VENV_PATH="/root/python_venv"
 
 echo "🧹 Removing old environment (if any)..."
 rm -rf "$VENV_PATH"
@@ -15,19 +15,19 @@ echo "⬇️ Installing required dependencies..."
 pip install --upgrade pip
 pip install \
     numpy \
+    pandas \
+    matplotlib \
+    catkin-pkg \
     pyyaml \
+    "roslibpy==1.6.0" \
     jinja2 \
     typeguard \
-    "roslibpy==1.6.0" \
-    autobahn \
-    twisted \
-    cryptography \
-    service-identity \
-    pyopenssl \
-    attrs \
-    typing-extensions \
-    txaio \
-    zope-interface
+    empy \
+    lark \
+    ultralytics \
+    supervision \
+    opencv-python \
+
 
 echo "✅ Verifying core modules..."
 python3 - <<'PY'
