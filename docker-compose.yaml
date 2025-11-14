@@ -10,8 +10,8 @@ services:
     image: ned2_driver_image  # Use pre-built image
     container_name: ned2_driver
     environment:
-      - GAZEBO_RESOURCE_PATH=/volume:${GAZEBO_RESOURCE_PATH} 
       - DISPLAY=$DISPLAY
+      - GAZEBO_RESOURCE_PATH=/volume
       #- DISPLAY=host.docker.internal:0.0  # Windows-specific display setting
       #- QT_X11_NO_MITSHM=1
     volumes:
@@ -25,6 +25,8 @@ services:
     tty: true
     networks:
       - ros_net
+    ports:
+      - "8888:8888"  # Jupyter Lab
     entrypoint:
       - /bin/bash
       - -c
@@ -33,17 +35,18 @@ services:
         source /opt/ros/jazzy/setup.bash
         source ~/ws_moveit/install/setup.bash
         source ~/ws_ros2_drivers/install/setup.bash
-        source ~/python_venv/bin/activate
         python3 /scripts/sim/rosbridge_image_forwarder.py --rb-host ned2_sim --rb-port 9090 --use-sim-time &
         sleep 10
-        ros2 launch /scripts/sim/ned2_moveit_custom.launch.py || echo "Launch failed"
-        jupyter lab \
+        ros2 launch /scripts/sim/ned2_moveit_custom.launch.py || echo "Launch failed" &
+        sleep 20
+        JUPYTER_TOKEN=${JUPYTER_TOKEN:-lab}
+        nohup jupyter lab \
           --ip=0.0.0.0 \
           --port=8888 \
           --no-browser \
-          --ServerApp.root_dir=/root \
-          --ServerApp.token="${JUPYTER_TOKEN:-lab}" \
-          --NotebookApp.allow_origin='*' \
+          --ServerApp.root_dir=/root/ws_pick \
+          --allow-root \
+          --IdentityProvider.token="$JUPYTER_TOKEN" \
           > /tmp/jupyter.log 2>&1 &
 
         bash # Keep container alive

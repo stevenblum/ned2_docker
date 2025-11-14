@@ -7,3 +7,11 @@ to control the ned2 robot in the simulation container.
 I startup both containers with a docker compose file that also executes several 
 basic scripts to starup gazebo, moveit, rviz, and several custom notes.
 I can sucessfully control the simulated robot from the driver container with moveit. 
+
+source /opt/ros/jazzy/setup.bash
+source ~/ws_moveit/install/setup.bash
+source ~/ros2_drivers_ws/install/setup.bash
+source ~/stacks_ws/install/setup.bash
+source ~/ros2_driver_venv/bin/activate
+
+ros2

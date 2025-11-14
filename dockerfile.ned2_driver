@@ -93,7 +93,6 @@ RUN pip install --break-system-packages \
 # https://moveit.picknik.ai/main/doc/tutorials/getting_started/getting_started.html
 RUN /bin/bash -c "cd ~/ws_moveit && \
     source /opt/ros/jazzy/setup.bash && \
-    source ~/python_venv/bin/activate && \
     colcon build --mixin release --cmake-args -DBUILD_PYTHON_BINDINGS=ON"
 
 # Build Niryo ROS2 Driver, Which include Description and URDF
@@ -105,7 +104,7 @@ RUN git config --global credential.helper "" && \
     cd ~/ws_ros2_drivers && \
     source ~/ws_moveit/install/setup.bash && \
     rosdep install --from-paths src --ignore-src -r -y && \
-    pip install -r src/ned-ros2-driver/requirements.txt && \
+    pip install --break-system-packages -r src/ned-ros2-driver/requirements.txt && \
     colcon build"
 
 VOLUME ./v_ned2_driver /volume
@@ -114,7 +113,7 @@ VOLUME ./v_ned2_driver /volume
 RUN /bin/bash -c "cd ~ && \
     git clone https://github.com/stevenblum/mcmot.git && \
     cd ~/mcmot && \
-    pip install -e ."
+    pip install --break-system-packages -e ."
 
 # Install ros2_stacks, ROS2 workspace with a node to stack tiles, Added 11/6
 RUN /bin/bash -c "mkdir -p ~/ws_stacks/src && \
@@ -126,7 +125,7 @@ RUN /bin/bash -c "mkdir -p ~/ws_stacks/src && \
     source ~/ws_ros2_drivers/install/setup.bash && \
     colcon build --packages-select ros2_stacks --symlink-install"
 
-RUN pip install jupyterlab
+RUN pip install --break-system-packages --ignore-installed jupyterlab
 
 # Set up ROS environment
 SHELL ["/bin/bash", "-c"]
