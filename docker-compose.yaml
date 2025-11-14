@@ -37,6 +37,15 @@ services:
         python3 /scripts/sim/rosbridge_image_forwarder.py --rb-host ned2_sim --rb-port 9090 --use-sim-time &
         sleep 10
         ros2 launch /scripts/sim/ned2_moveit_custom.launch.py || echo "Launch failed"
+        jupyter lab \
+          --ip=0.0.0.0 \
+          --port=8888 \
+          --no-browser \
+          --ServerApp.root_dir=/root \
+          --ServerApp.token="${JUPYTER_TOKEN:-lab}" \
+          --NotebookApp.allow_origin='*' \
+          > /tmp/jupyter.log 2>&1 &
+
         bash # Keep container alive
 
   ned2_sim:

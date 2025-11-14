@@ -71,6 +71,7 @@ RUN apt-get update && apt-get install -y \
 #ENV PATH="${VENV_PATH}/bin:${PATH}"
 
 RUN pip install --break-system-packages \
+    numpy==1.26.4 \
     pandas \
     matplotlib \
     catkin-pkg \
@@ -124,6 +125,8 @@ RUN /bin/bash -c "mkdir -p ~/ws_stacks/src && \
     source ~/ws_moveit/install/setup.bash && \
     source ~/ws_ros2_drivers/install/setup.bash && \
     colcon build --packages-select ros2_stacks --symlink-install"
+
+RUN pip install jupyterlab
 
 # Set up ROS environment
 SHELL ["/bin/bash", "-c"]

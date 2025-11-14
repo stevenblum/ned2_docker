@@ -1,0 +1,137 @@
+<?xml version="1.0"?>
+<sdf version="1.6">
+  <model name="cube2">
+    <pose>0.0 0.0 0.0 0 0 0.0</pose>
+
+    <link name="cube2_link">
+      <inertial>
+        <mass>0.05</mass>
+        <inertia>
+          <ixx>0.000020833</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.000020833</iyy>
+          <iyz>0</iyz>
+          <izz>0.000020833</izz>
+        </inertia>
+      </inertial>
+
+      <collision name="collision">
+        <geometry>
+          <box>
+            <size>0.05 0.05 0.05</size>
+          </box>
+        </geometry>
+      </collision>
+
+      <visual name="body_visual">
+        <geometry>
+          <box>
+            <size>0.05 0.05 0.05</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.95 0.95 0.95 1</ambient>
+          <diffuse>0.95 0.95 0.95 1</diffuse>
+        </material>
+      </visual>
+
+      <visual name="face_xp">
+        <pose>0.02500001 0 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.000001 0.04 0.04</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file:///volume/models/cube_model/materials/scripts</uri>
+            <uri>file:///volume/models/cube_model/materials/textures</uri>
+            <name>aruco_6</name>
+          </script>
+        </material>
+      </visual>
+
+      <visual name="face_xm">
+        <pose>-0.02500001 0 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.00001 0.04 0.04</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file:///volume/models/cube_model/materials/scripts</uri>
+            <uri>file:///volume/models/cube_model/materials/textures</uri>
+            <name>aruco_7</name>
+          </script>
+        </material>
+      </visual>
+
+      <visual name="face_yp">
+        <pose>0 0.02500001 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.05 0.00001 0.05</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file:///volume/models/cube_model/materials/scripts</uri>
+            <uri>file:///volume/models/cube_model/materials/textures</uri>
+            <name>aruco_8</name>
+          </script>
+        </material>
+      </visual>
+
+      <visual name="face_ym">
+        <pose>0 -0.02500001 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.04 0.00001 0.04</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file:///volume/models/cube_model/materials/scripts</uri>
+            <uri>file:///volume/models/cube_model/materials/textures</uri>
+            <name>aruco_9</name>
+          </script>
+        </material>
+      </visual>
+
+      <visual name="face_zp">
+        <pose>0 0 0.02500001 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.04 0.04 0.00001</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file:///volume/models/cube_model/materials/scripts</uri>
+            <uri>file:///volume/models/cube_model/materials/textures</uri>
+            <name>aruco_10</name>
+          </script>
+        </material>
+      </visual>
+
+      <visual name="face_zm">
+        <pose>0 0 -0.02500001 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.05 0.05 0.00001</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file:///volume/models/cube_model/materials/scripts</uri>
+            <uri>file:///volume/models/cube_model/materials/textures</uri>
+            <name>blank</name>
+          </script>
+        </material>
+      </visual>
+
+    </link>
+  </model>
+</sdf>
